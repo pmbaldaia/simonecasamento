@@ -1,0 +1,180 @@
+<script setup>
+import { ref, onMounted } from "vue";
+import {
+  PhMoon,
+  PhSun,
+  PhInstagramLogo,
+  PhFacebookLogo,
+  PhList,
+  PhX,
+} from "@phosphor-icons/vue";
+
+import { useRoute } from "vue-router";
+
+const colorMode = useColorMode();
+const open = ref(false);
+const isMounted = ref(false);
+const route = useRoute();
+
+const toggleTheme = () => {
+  colorMode.preference = colorMode.preference === "dark" ? "light" : "dark";
+};
+
+const menuitems = [
+  { title: "A Nossa História", path: "/sobre-nos/" },
+  { title: "Cerimónia", path: "/cerimonia/" },
+  { title: "Confirme Presença", path: "/confirme-presenca/" },
+  { title: "Contactos", path: "/contactos/" },
+];
+
+onMounted(() => {
+  isMounted.value = true;
+});
+</script>
+
+<template>
+  <LandingContainer>
+    <header
+      class="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-gray-900 shadow-md"
+    >
+      <div
+        class="max-w-7xl mx-auto px-8 flex flex-col lg:flex-row justify-between items-center pt-5 pb-5"
+      >
+        <div class="flex w-full lg:w-auto items-center justify-between">
+          <a href="/" class="text-lg">
+            <img
+              v-if="isMounted && colorMode.value !== 'dark'"
+              class="rounded-full transition-transform transform hover:scale-125 w-16 h-16 lg:w-20 lg:h-20"
+              src="/assets/img/casal.png"
+              alt="Logo GDCSSCastelões"
+              loading="eager"
+            />
+            <img
+              v-else-if="isMounted && colorMode.value === 'dark'"
+              class="rounded-full transition-transform transform hover:scale-125 w-16 h-16 lg:w-20 lg:h-20"
+              src="/assets/img/casal.png"
+              alt="Logo GDCSSCastelões (Dark)"
+              loading="eager"
+            />
+          </a>
+
+          <div
+            class="flex items-center space-x-4 lg:hidden mr-5"
+            v-if="isMounted"
+          >
+            <button
+              @click="toggleTheme"
+              :aria-label="
+                colorMode.preference === 'dark'
+                  ? 'Alternar para tema claro'
+                  : 'Alternar para tema escuro'
+              "
+              class="hover:text-pink-600 transition w-6 h-6 flex items-center justify-center"
+            >
+              <PhSun
+                v-if="colorMode.preference === 'dark'"
+                class="w-6 h-6 text-white"
+              />
+              <PhMoon v-else class="w-6 h-6 text-gray-900" />
+            </button>
+
+            <button
+              @click="open = !open"
+              :class="
+                colorMode.preference === 'dark' ? 'text-white' : 'text-gray-800'
+              "
+              aria-label="Menu"
+            >
+              <PhX v-if="open" class="w-6 h-6" />
+              <PhList v-else class="w-6 h-6" />
+            </button>
+          </div>
+        </div>
+
+        <nav
+          v-if="isMounted"
+          class="w-full lg:w-auto mt-2 lg:flex lg:mt-0"
+          :class="{ block: open, hidden: !open }"
+        >
+          <ul
+            class="flex flex-col items-center text-center lg:flex-row lg:gap-3"
+          >
+            <li v-for="item in menuitems" :key="item.path">
+              <NuxtLink
+                :to="item.path"
+                @click="open = false"
+                :class="[
+                  'flex lg:px-3 py-2 transition-all duration-300 border-b-2',
+                  item.path === route.path
+                    ? 'border-pink-600 text-pink-600'
+                    : 'border-transparent text-black dark:text-white',
+                  'hover:text-pink-600 hover:border-pink-600',
+                ]"
+                style="text-underline-offset: 4px"
+              >
+                {{ item.title }}
+              </NuxtLink>
+            </li>
+          </ul>
+
+          <!-- <div
+            class="lg:hidden flex justify-center items-center mt-3 gap-4 w-full"
+          >
+            <a
+              href="https://www.instagram.com/gdcsscasteloes/"
+              aria-label="Instagram"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <PhInstagramLogo class="w-6 h-6" />
+            </a>
+            <a
+              href="https://www.facebook.com/gdcscasteloes/"
+              aria-label="Facebook"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <PhFacebookLogo class="w-6 h-6" />
+            </a>
+          </div> -->
+        </nav>
+
+        <div class="hidden lg:flex items-center gap-4">
+          <!-- <a
+            href="https://www.instagram.com/gdcsscasteloes/"
+            target="_blank"
+            aria-label="Instagram"
+          >
+            <PhInstagramLogo class="w-6 h-6" />
+          </a>
+          <a
+            href="https://www.facebook.com/gdcscasteloes/"
+            target="_blank"
+            aria-label="Facebook"
+          >
+            <PhFacebookLogo class="w-6 h-6" />
+          </a> -->
+          <button
+            v-if="isMounted"
+            @click="toggleTheme"
+            :aria-label="
+              colorMode.preference === 'dark'
+                ? 'Alternar para tema claro'
+                : 'Alternar para tema escuro'
+            "
+            class="hover:text-pink-600 transition w-6 h-6 flex items-center justify-center"
+          >
+            <PhSun
+              v-if="colorMode.preference === 'dark'"
+              class="w-6 h-6 text-white"
+            />
+            <PhMoon v-else class="w-6 h-6 text-gray-900" />
+          </button>
+        </div>
+      </div>
+      <hr
+        class="border-t-2 border-gray-200 dark:border-gray-700 w-full mx-auto"
+      />
+    </header>
+  </LandingContainer>
+</template>
