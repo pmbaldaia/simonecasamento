@@ -1,42 +1,30 @@
-# 💛 Ana & Henrique – O Nosso Grande Dia 💛
+💜 Simone & Incógnica – O Nosso Grande Dia 💜
+Olá, querido convidado virtual! 👋
 
----
+Se estás aqui, parabéns! Acabas de entrar no universo mágico onde a Simone & a Incógnica se preparam para dizer “SIM” para a vida toda — com direito a muitas gargalhadas, dança até os pés pedirem descanso e, claro, muito amor roxo para iluminar tudo! ✨
 
-### Olá, querido convidado virtual! 👋
+O que é este projeto?
 
-Se estás aqui, parabéns! Acabas de entrar no universo mágico onde a **Ana & o Henrique** se preparam para dizer “SIM” para a vida toda — com direito a muitas gargalhadas, dança até os pés pedirem descanso e, claro, muito amor dourado para iluminar tudo! ✨
+Este é o site oficial do nosso casamento, feito com muito carinho, código e umas boas doses de nervosismo pré-cerimónia. Aqui vais poder:
 
----
+Confirmar a tua presença (por favor, diz que vais! 😅)
 
-## O que é este projeto?
+Ver todos os detalhes para não perderes nenhum momento especial
 
-Este é o site oficial do nosso casamento, feito com muito carinho, código e umas pitadas de nervosismo pré-cerimónia. Aqui vais poder:
+Aceder a links importantes (políticas, contactos e muito mais)
 
-- Confirmar a tua presença (por favor, diz que vais! 😅)
-- Ver todos os detalhes para não perderes nenhum momento especial
-- Aceder a links importantes (políticas, contactos e muito mais)
-- Seguir as nossas redes sociais e entrar no espírito antes do grande dia
+Seguir as nossas redes sociais e entrar no espírito antes do grande dia
 
----
+Quer ajudar?
 
-## Quer ajudar?
+Aceitamos convidados especiais para sugestões, designs fofos ou até dicas de dança para o dia. Só não prometemos ensinar passos! 😄
 
-Aceitamos *convidados especiais* para sugestões, designs fofos ou mesmo dicas de dança para o dia. Só não prometemos ensinar passos! 😄
+Agradecimentos
 
----
+Um super obrigado a todos os que fazem parte desta aventura — desde as nossas famílias até aquele amigo que promete cantar na festa (prepara-te!). E claro, a ti que estás a ler isto agora! 💜
 
-## Agradecimentos
+Feito com 💜, brilho e muito amor por Simone & Incógnica.
 
-Um super obrigado a todos os que fazem parte desta aventura — desde os nossos pais até aquele tio que promete cantar na festa (prepara-te!). E claro, a ti que estás a ler isto agora! 💛
-
----
-
-Feito com 💛, glitter e muito amor por **Ana & Henrique**.
-
----
-
-**PS:** Se aparecer algum bug, prometemos que foi só emoção!
-
----
+PS: Se aparecer algum bug, prometemos que foi só emoção!
 
 Queremos ver-te na festa! 🎊
