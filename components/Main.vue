@@ -2,7 +2,6 @@
   <v-container fluid>
     <Home />
     <About />
-    <Skills />
     <Footer />
   </v-container>
 </template>
@@ -10,14 +9,12 @@
 <script>
 import Home from "@/components/Home";
 import About from "@/components/About";
-import Skills from "@/components/Skills";
 import Footer from "@/components/Footer";
 
 export default {
   components: {
     Home,
     About,
-    Skills,
     Footer,
   },
   data() {
