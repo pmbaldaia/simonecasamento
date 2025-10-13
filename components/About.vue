@@ -2,17 +2,22 @@
   <v-container fluid class="wedding-info-container portfolio-container">
     <div id="wedding-info" class="px-4">
       <div class="info-wrapper" data-aos="fade-up">
-        <div class="section-title">Informações do Casamento</div>
-        <div class="details text-center mb-6">
-          <p class="date">12 de Abril de 2026</p>
-          <p class="time">Cerimónia: 16h00</p>
-          <p class="location">Sítio Bela Vista • Lisboa</p>
-        </div>
-        <div class="note text-center" data-aos="fade-up">
-          <p>
-            Traje: Formal / Cocktail <br />
-            Por favor, confirme a sua presença através do botão RSVP.
-          </p>
+        <div class="icons-row text-center mb-6">
+          <div class="icon-item">
+            <v-icon large color="$gold-color">mdi-ring</v-icon>
+            <p class="label">Cerimónia</p>
+            <p class="time">16h00</p>
+          </div>
+          <div class="icon-item">
+            <v-icon large color="$gold-color">mdi-weather-sunset</v-icon>
+            <p class="label">Sunset</p>
+            <p class="time">18h30</p>
+          </div>
+          <div class="icon-item">
+            <v-icon large color="$gold-color">mdi-silverware-fork-knife</v-icon>
+            <p class="label">Jantar</p>
+            <p class="time">20h00</p>
+          </div>
         </div>
       </div>
     </div>
@@ -44,36 +49,37 @@ export default {
       margin-bottom: 2rem;
     }
 
-    .details {
-      font-family: $heading-font-family;
-      font-size: 1.5rem;
+    .icons-row {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      flex-wrap: wrap;
       margin-bottom: 2rem;
 
-      p {
-        margin: 0.5rem 0;
-      }
+      .icon-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 1rem;
 
-      .date {
-        color: $gold-color;
-        font-weight: 600;
-        font-size: 2rem;
-      }
+        v-icon {
+          font-size: 3rem;
+        }
 
-      .time {
-        color: $text-color;
-      }
+        .label {
+          margin-top: 0.5rem;
+          font-family: $heading-font-family;
+          font-size: 1.3rem;
+          color: $text-color;
+        }
 
-      .location {
-        color: $text-color;
-        font-style: italic;
+        .time {
+          margin-top: 0.25rem;
+          font-family: $body-font-family;
+          font-size: 1.1rem;
+          color: $muted-gray;
+        }
       }
-    }
-
-    .note {
-      font-family: $body-font-family;
-      font-size: 1.2rem;
-      color: $muted-gray;
-      line-height: 1.5;
     }
   }
 
@@ -81,10 +87,13 @@ export default {
     .section-title {
       font-size: 2rem;
     }
-    .details p {
-      font-size: 1.2rem;
+    .icons-row .icon-item {
+      margin: 0.75rem;
     }
-    .note {
+    .icons-row .icon-item .label {
+      font-size: 1.1rem;
+    }
+    .icons-row .icon-item .time {
       font-size: 1rem;
     }
   }
