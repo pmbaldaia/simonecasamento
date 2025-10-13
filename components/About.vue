@@ -2,6 +2,7 @@
   <v-container fluid class="wedding-info-container portfolio-container">
     <div id="wedding-info" class="px-4">
       <div class="info-wrapper" data-aos="fade-up">
+        <div class="section-title">Informações do Casamento</div>
         <div class="icons-row text-center mb-6">
           <div class="icon-item">
             <v-icon large color="$gold-color">mdi-ring</v-icon>
@@ -84,8 +85,8 @@ export default {
   }
 
   @media screen and (max-width: 767px) {
-    .section-title {
-      font-size: 2rem;
+    .info-wrapper .section-title {
+      font-size: 1.2rem;
     }
     .icons-row .icon-item {
       margin: 0.75rem;
