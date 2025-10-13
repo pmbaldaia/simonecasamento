@@ -12,6 +12,9 @@
     </div>
 
     <v-container fluid class="home-content">
+      <div class="logo-ring">
+        <v-icon size="64" color="white">mdi-ring</v-icon>
+      </div>
       <div class="banner-wrapper">
         <h1 class="full-name">Simone & Teste</h1>
         <div class="wedding-info">
@@ -28,24 +31,16 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "Home",
-  data() {
-    return { scrollY: 0 };
-  },
-  mounted() {
-    window.addEventListener("scroll", this.handleScroll);
-  },
-  beforeDestroy() {
-    window.removeEventListener("scroll", this.handleScroll);
-  },
-  methods: {
-    handleScroll() {
-      this.scrollY = window.scrollY;
-    },
-  },
+<script setup>
+import { ref, onMounted, onBeforeUnmount } from "vue";
+
+const scrollY = ref(0);
+const handleScroll = () => {
+  scrollY.value = window.scrollY;
 };
+
+onMounted(() => window.addEventListener("scroll", handleScroll));
+onBeforeUnmount(() => window.removeEventListener("scroll", handleScroll));
 </script>
 
 <style lang="scss" scoped>
@@ -90,6 +85,14 @@ export default {
     text-align: center;
     padding: 0 2rem;
 
+    .logo-ring {
+      position: absolute;
+      top: 2rem;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
     .banner-wrapper {
       display: flex;
       flex-direction: column;
@@ -100,7 +103,7 @@ export default {
     .full-name {
       font-family: $handwriting-font-family;
       font-size: 5rem;
-      color: $white-color;
+      color: white;
       margin-bottom: 1rem;
       text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
     }
@@ -115,12 +118,12 @@ export default {
       }
 
       .date {
-        color: $gold-color;
+        color: #d4af37;
         font-size: 2rem;
       }
 
       .location {
-        color: $offwhite-color;
+        color: #f5f5f5;
         font-size: 1.5rem;
       }
     }

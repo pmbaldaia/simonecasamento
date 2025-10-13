@@ -1,28 +1,17 @@
 <template>
-  <v-container fluid>
+  <v-container fluid class="pa-0">
     <Home />
     <About />
     <Footer />
   </v-container>
 </template>
 
-<script>
-import Home from "@/components/Home";
-import About from "@/components/About";
-import Footer from "@/components/Footer";
+<script setup>
+import Home from "@/components/Home.vue";
+import About from "@/components/About.vue";
+import Footer from "@/components/Footer.vue";
 
-export default {
-  components: {
-    Home,
-    About,
-    Footer,
-  },
-  data() {
-    return {
-      showMenu: false,
-    };
-  },
-};
+const showMenu = ref(false);
 </script>
 
 <style lang="scss" scoped>

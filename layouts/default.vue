@@ -1,19 +1,16 @@
 <template>
-  <v-app dark>
-    <nuxt />
+  <v-app>
+    <v-main>
+      <NuxtPage />
+    </v-main>
   </v-app>
 </template>
 
-<script>
-export default {
-  data() {
-    return {}
-  }
-}
-</script>
+<script setup></script>
+
 <style lang="scss" scoped>
 #app {
-  font-family: 'Biko', sans-serif;
+  font-family: "Biko", sans-serif;
   ::-webkit-scrollbar {
     width: 0px;
     background: transparent;

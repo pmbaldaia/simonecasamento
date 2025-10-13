@@ -5,17 +5,17 @@
         <div class="section-title">Informações do Casamento</div>
         <div class="icons-row text-center mb-6">
           <div class="icon-item">
-            <v-icon large color="$gold-color">mdi-ring</v-icon>
+            <v-icon size="48" color="#d4af37">mdi-ring</v-icon>
             <p class="label">Cerimónia</p>
             <p class="time">16h00</p>
           </div>
           <div class="icon-item">
-            <v-icon large color="$gold-color">mdi-weather-sunset</v-icon>
+            <v-icon size="48" color="#d4af37">mdi-weather-sunset</v-icon>
             <p class="label">Sunset</p>
             <p class="time">18h30</p>
           </div>
           <div class="icon-item">
-            <v-icon large color="$gold-color">mdi-silverware-fork-knife</v-icon>
+            <v-icon size="48" color="#d4af37">mdi-silverware-fork-knife</v-icon>
             <p class="label">Jantar</p>
             <p class="time">20h00</p>
           </div>
@@ -25,17 +25,13 @@
   </v-container>
 </template>
 
-<script>
-export default {
-  name: "WeddingInfo",
-};
-</script>
+<script setup></script>
 
 <style lang="scss" scoped>
 @import "~/assets/scss/_variables.scss";
 
 .wedding-info-container {
-  color: $text-color;
+  color: #232020;
   padding: 3rem 0;
 
   .info-wrapper {
@@ -45,7 +41,7 @@ export default {
     .section-title {
       font-family: $heading-font-family;
       font-size: 2.5rem;
-      color: $gold-color;
+      color: #d4af37;
       text-align: center;
       margin-bottom: 2rem;
     }
@@ -63,22 +59,18 @@ export default {
         align-items: center;
         margin: 1rem;
 
-        v-icon {
-          font-size: 3rem;
-        }
-
         .label {
           margin-top: 0.5rem;
           font-family: $heading-font-family;
           font-size: 1.3rem;
-          color: $text-color;
+          color: #232020;
         }
 
         .time {
           margin-top: 0.25rem;
           font-family: $body-font-family;
           font-size: 1.1rem;
-          color: $muted-gray;
+          color: #999999;
         }
       }
     }
@@ -86,7 +78,7 @@ export default {
 
   @media screen and (max-width: 767px) {
     .info-wrapper .section-title {
-      font-size: 1.2rem;
+      font-size: 1.5rem;
     }
     .icons-row .icon-item {
       margin: 0.75rem;

@@ -1,16 +1,9 @@
 <template>
-  <v-layout>
-    <Main />
-  </v-layout>
+  <Main />
 </template>
 
-<script>
-import Main from '@/components/Main'
-export default {
-  components: {
-    Main
-  }
-}
+<script setup>
+import Main from "@/components/Main.vue";
 </script>
 
 <style lang="scss" scoped></style>

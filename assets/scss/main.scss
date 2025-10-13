@@ -1,10 +1,12 @@
-@import "~/assets/scss/_variables.scss";
+@use "vuetify/styles";
+@use "~/assets/scss/_variables.scss" as vars;
+@use "sass:color";
 
 html,
 body {
-  background: $background-color;
-  color: $text-color;
-  font-family: $body-font-family;
+  background: vars.$background-color;
+  color: vars.$text-color;
+  font-family: vars.$body-font-family;
   margin: 0;
   padding: 0;
   scroll-behavior: smooth;
@@ -14,14 +16,37 @@ body {
   margin: 2rem 0;
   font-size: 3rem;
   text-align: center;
-  color: $gold-color;
-  font-family: $heading-font-family;
+  color: vars.$gold-color;
+  font-family: vars.$heading-font-family;
   letter-spacing: 1px;
   text-transform: uppercase;
 }
 
-.container {
-  padding: 0;
+a {
+  color: vars.$gold-color;
+  text-decoration: none;
+  transition: 0.3s;
+
+  &:hover {
+    color: color.adjust(vars.$gold-color, $lightness: -10%);
+  }
+}
+
+button {
+  background-color: vars.$gold-color;
+  color: vars.$white-color;
+  border: none;
+  border-radius: 30px;
+  padding: 0.75rem 2rem;
+  cursor: pointer;
+  font-family: vars.$heading-font-family;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: color.adjust(vars.$gold-color, $lightness: -10%);
+  }
 }
 
 .portfolio-container {
@@ -29,31 +54,8 @@ body {
   margin: 0 auto;
 }
 
-a {
-  color: $gold-color;
-  text-decoration: none;
-  transition: 0.3s;
-}
-
-a:hover {
-  color: darken($gold-color, 10%);
-}
-
-button {
-  background-color: $gold-color;
-  color: $white-color;
-  border: none;
-  border-radius: 30px;
-  padding: 0.75rem 2rem;
-  cursor: pointer;
-  font-family: $heading-font-family;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-  transition: all 0.3s ease;
-}
-
-button:hover {
-  background-color: darken($gold-color, 10%);
+.container {
+  padding: 0;
 }
 
 @media screen and (max-width: 767px) {
