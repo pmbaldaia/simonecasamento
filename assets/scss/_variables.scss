@@ -1,0 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display&family=Work+Sans&display=swap");
+
+$body-font-family: "Work Sans", sans-serif;
+$heading-font-family: "Playfair Display", serif;
+$handwriting-font-family: "Great Vibes", cursive;
+
+$font-size-root: 16px;
+
+$white-color: #ffffff;
+$offwhite-color: #f9f6f2;
+$gold-color: #c5a46d;
+$light-gold-color: #e2cfa9;
+$background-color: $offwhite-color;
+$text-color: #3e3e3e;
+$muted-gray: #8c8c8c;
+
+@import "~vuetify/src/styles/styles.sass";

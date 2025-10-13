@@ -1,0 +1,64 @@
+@import "~/assets/scss/_variables.scss";
+
+html,
+body {
+  background: $background-color;
+  color: $text-color;
+  font-family: $body-font-family;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+.section-title {
+  margin: 2rem 0;
+  font-size: 3rem;
+  text-align: center;
+  color: $gold-color;
+  font-family: $heading-font-family;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.container {
+  padding: 0;
+}
+
+.portfolio-container {
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+a {
+  color: $gold-color;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+a:hover {
+  color: darken($gold-color, 10%);
+}
+
+button {
+  background-color: $gold-color;
+  color: $white-color;
+  border: none;
+  border-radius: 30px;
+  padding: 0.75rem 2rem;
+  cursor: pointer;
+  font-family: $heading-font-family;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: darken($gold-color, 10%);
+}
+
+@media screen and (max-width: 767px) {
+  .section-title {
+    font-size: 2.2rem;
+    line-height: 2.8rem;
+  }
+}

@@ -1,15 +1,16 @@
-<script setup>
-definePageMeta({
-  layout: "landing",
-});
+<template>
+  <v-layout>
+    <Main />
+  </v-layout>
+</template>
+
+<script>
+import Main from '@/components/Main'
+export default {
+  components: {
+    Main
+  }
+}
 </script>
 
-<template>
-  <LandingContainer>
-    <LandingHero />
-    <LandingFeatures />
-    <LandingPadrinhos />
-    <LandingProgramacao />
-    <LandingCta />
-  </LandingContainer>
-</template>
+<style lang="scss" scoped></style>
