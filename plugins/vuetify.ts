@@ -7,8 +7,6 @@ import { aliases, mdi } from "vuetify/iconsets/mdi";
 import "@mdi/font/css/materialdesignicons.css";
 import { pt } from "vuetify/locale";
 
-import "@/assets/scss/main.scss";
-
 export default defineNuxtPlugin((nuxtApp) => {
   const vuetify = createVuetify({
     components,

@@ -4,17 +4,15 @@
       "O amor tudo suporta, tudo crê, tudo espera, tudo suporta." – 1 Coríntios
       13:7
     </div>
-    <div class="footer">
-      <div class="copyright">© 2026 Simone & Teste</div>
-    </div>
+    <Copyright />
   </v-container>
 </template>
 
-<script setup></script>
+<script setup>
+import Copyright from "@/components/Copyright.vue";
+</script>
 
 <style lang="scss" scoped>
-@import "~/assets/scss/_variables.scss";
-
 .footer {
   display: flex;
   flex-direction: column;
@@ -35,24 +33,12 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
 
-  .copyright {
-    font-family: $heading-font-family;
-    color: #999999;
-    font-size: 1rem;
-    margin-top: 0.5rem;
-  }
-
   @media screen and (max-width: 767px) {
     padding: 1.5rem 1rem;
 
     .footer-message {
       font-size: 1rem;
       padding: 0.75rem 1rem;
-    }
-
-    .copyright {
-      font-size: 0.9rem;
-      margin-top: 0.25rem;
     }
   }
 }

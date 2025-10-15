@@ -7,7 +7,7 @@
           <div class="icon-item">
             <v-icon size="48" color="#d4af37">mdi-ring</v-icon>
             <p class="label">Cerimónia</p>
-            <p class="time">16h00</p>
+            <p class="time">12h00</p>
           </div>
           <div class="icon-item">
             <v-icon size="48" color="#d4af37">mdi-weather-sunset</v-icon>
@@ -28,7 +28,6 @@
 <script setup></script>
 
 <style lang="scss" scoped>
-@import "~/assets/scss/_variables.scss";
 
 .wedding-info-container {
   color: #232020;

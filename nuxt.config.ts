@@ -1,8 +1,11 @@
 import vuetify from "vite-plugin-vuetify";
+import { defineNuxtConfig } from "nuxt/config";
+import path from "path";
 
 export default defineNuxtConfig({
   ssr: false,
   compatibilityDate: "2025-10-13",
+
   app: {
     head: {
       title: "Casamento de Simone & Incógnita",
@@ -28,11 +31,7 @@ export default defineNuxtConfig({
     },
   },
 
-  css: [
-    "aos/dist/aos.css",
-    "~/assets/font/biko.css",
-    "~/assets/scss/main.scss",
-  ],
+  css: ["aos/dist/aos.css", "assets/font/biko.css", "assets/scss/main.scss"],
 
   plugins: ["~/plugins/aos.client.js", "~/plugins/typed.client.ts"],
 
@@ -41,6 +40,22 @@ export default defineNuxtConfig({
   vite: {
     ssr: { noExternal: ["vuetify"] },
     plugins: [vuetify()],
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname),
+        "~": path.resolve(__dirname),
+      },
+    },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `
+            @use "assets/scss/_variables.scss" as *;
+            @use "assets/scss/_typography.scss" as *;
+          `,
+        },
+      },
+    },
   },
 
   build: {

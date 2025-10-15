@@ -1,5 +1,6 @@
 @use "vuetify/styles";
-@use "~/assets/scss/_variables.scss" as vars;
+@use "assets/scss/_variables.scss" as vars;
+@use "assets/scss/_typography.scss";
 @use "sass:color";
 
 html,
