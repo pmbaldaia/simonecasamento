@@ -8,7 +8,7 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      title: "Casamento de Simone & Incógnita",
+      title: "Casamento de Simone & João",
       htmlAttrs: { lang: "pt" },
       meta: [
         { charset: "utf-8" },
@@ -16,10 +16,10 @@ export default defineNuxtConfig({
         {
           name: "description",
           content:
-            "Celebração do amor entre Simone e Incógnita — um casamento repleto de emoção, amizade e momentos inesquecíveis.",
+            "Celebração do amor entre Simone & João — um casamento repleto de emoção, amizade e momentos inesquecíveis.",
         },
         { property: "og:type", content: "website" },
-        { property: "og:title", content: "Casamento de Simone & Incógnita" },
+        { property: "og:title", content: "Casamento de Simone & João" },
         { property: "og:url", content: "https://simone-e-incognita.pt/" },
         {
           property: "og:image",
@@ -64,8 +64,8 @@ export default defineNuxtConfig({
 
   pwa: {
     manifest: {
-      name: "Casamento de Simone & Incógnita",
-      short_name: "Simone & Incógnita",
+      name: "Casamento de Simone & João",
+      short_name: "Simone & João",
       lang: "pt",
       background_color: "#fffdf8",
       theme_color: "#d4af37",
