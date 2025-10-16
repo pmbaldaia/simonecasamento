@@ -38,7 +38,12 @@ export default defineNuxtConfig({
 
   vite: {
     ssr: { noExternal: ["vuetify"] },
-    plugins: [vuetify()],
+    plugins: [
+      vuetify({
+        autoImport: true,
+        styles: { configFile: "assets/scss/_variables.scss" },
+      }),
+    ],
     resolve: {
       alias: {
         "@": path.resolve(__dirname),
