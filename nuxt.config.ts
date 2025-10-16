@@ -20,7 +20,6 @@ export default defineNuxtConfig({
         },
         { property: "og:type", content: "website" },
         { property: "og:title", content: "Casamento de Simone & João" },
-        { property: "og:url", content: "https://simone-e-incognita.pt/" },
         {
           property: "og:image",
           content:

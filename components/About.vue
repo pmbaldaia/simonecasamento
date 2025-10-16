@@ -1,92 +1,90 @@
 <template>
-  <v-container fluid class="wedding-info-container portfolio-container">
-    <div id="wedding-info" class="px-4">
-      <div class="info-wrapper" data-aos="fade-up">
-        <div class="section-title">Informações do Casamento</div>
-        <div class="icons-row text-center mb-6">
-          <div class="icon-item">
-            <v-icon size="48" color="#d4af37">mdi-ring</v-icon>
+  <v-container fluid class="info-section py-12">
+    <v-row justify="center">
+      <v-col cols="12" md="8" class="text-center">
+        <h2 class="section-title">Informações do Casamento</h2>
+      </v-col>
+
+      <v-col cols="12" md="10" class="text-center">
+        <v-row justify="center" align="center">
+          <v-col cols="12" md="4" class="info-item">
+            <v-icon color="#c5a46d" size="56">mdi-ring</v-icon>
             <p class="label">Cerimónia</p>
-            <p class="time">12h00</p>
-          </div>
-          <div class="icon-item">
-            <v-icon size="48" color="#d4af37">mdi-weather-sunset</v-icon>
-            <p class="label">Sunset</p>
-            <p class="time">18h30</p>
-          </div>
-          <div class="icon-item">
-            <v-icon size="48" color="#d4af37">mdi-silverware-fork-knife</v-icon>
+            <p class="time">14h30</p>
+          </v-col>
+          <v-col cols="12" md="4" class="info-item">
+            <v-icon color="#c5a46d" size="56">mdi-weather-sunset</v-icon>
+            <p class="label">Cocktail</p>
+            <p class="time">16h30</p>
+          </v-col>
+          <v-col cols="12" md="4" class="info-item">
+            <v-icon color="#c5a46d" size="56">mdi-silverware-fork-knife</v-icon>
             <p class="label">Jantar</p>
             <p class="time">20h00</p>
-          </div>
-        </div>
-      </div>
-    </div>
+          </v-col>
+        </v-row>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
 <script setup></script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
+.info-section {
+  background-color: #fffaf7;
+  text-align: center;
+  color: #3e3e3e;
 
-.wedding-info-container {
-  color: #232020;
-  padding: 3rem 0;
+  .section-title {
+    font-family: "Playfair Display", serif;
+    font-size: 2.5rem;
+    color: #c5a46d;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
 
-  .info-wrapper {
-    max-width: 800px;
-    margin: 0 auto;
+  .info-item {
+    margin-bottom: 2rem;
 
-    .section-title {
-      font-family: $heading-font-family;
-      font-size: 2.5rem;
-      color: #d4af37;
-      text-align: center;
-      margin-bottom: 2rem;
+    .label {
+      font-family: "Playfair Display", serif;
+      font-size: 1.4rem;
+      margin-top: 0.5rem;
+      color: #3e3e3e;
     }
 
-    .icons-row {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      flex-wrap: wrap;
-      margin-bottom: 2rem;
-
-      .icon-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin: 1rem;
-
-        .label {
-          margin-top: 0.5rem;
-          font-family: $heading-font-family;
-          font-size: 1.3rem;
-          color: #232020;
-        }
-
-        .time {
-          margin-top: 0.25rem;
-          font-family: $body-font-family;
-          font-size: 1.1rem;
-          color: #999999;
-        }
-      }
+    .time {
+      font-size: 1.2rem;
+      color: #8c8c8c;
     }
   }
 
-  @media screen and (max-width: 767px) {
-    .info-wrapper .section-title {
-      font-size: 1.5rem;
+  @media (max-width: 960px) {
+    .section-title {
+      font-size: 2rem;
     }
-    .icons-row .icon-item {
-      margin: 0.75rem;
+
+    .info-item .label {
+      font-size: 1.2rem;
     }
-    .icons-row .icon-item .label {
+
+    .info-item .time {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .section-title {
+      font-size: 1.6rem;
+    }
+
+    .info-item .label {
       font-size: 1.1rem;
     }
-    .icons-row .icon-item .time {
-      font-size: 1rem;
+
+    .info-item .time {
+      font-size: 0.95rem;
     }
   }
 }
