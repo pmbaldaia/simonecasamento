@@ -12,17 +12,7 @@
       <div class="overlay"></div>
     </div>
 
-    <svg class="mask-defs" width="0" height="0" aria-hidden="true">
-      <defs>
-        <clipPath id="aquedutoClip" clipPathUnits="objectBoundingBox">
-          <path
-            d="M0,0.15 C0,0 0.15,0 0.5,0 C0.85,0 1,0 1,0.15 L1,0.95 L0,0.95 Z"
-          />
-        </clipPath>
-      </defs>
-    </svg>
-
-    <div class="home-content" :style="{ clipPath: 'url(#aquedutoClip)' }">
+    <div class="home-content">
       <div class="banner-wrapper">
         <h1 class="full-name">Simone & João</h1>
         <div class="wedding-info">
@@ -37,7 +27,7 @@
       </div>
     </div>
 
-    <div class="music-player">
+    <div class="music-player" v-show="showPlayer">
       <v-btn
         variant="text"
         icon
@@ -67,10 +57,12 @@ const isScrolled = ref(false);
 const audio = ref(null);
 const isPlaying = ref(false);
 const progress = ref(0);
+const showPlayer = ref(true);
 
 function handleScroll() {
   scrollY.value = window.scrollY;
   isScrolled.value = window.scrollY > 40;
+  showPlayer.value = window.scrollY < window.innerHeight;
 }
 
 function togglePlay() {
@@ -120,12 +112,11 @@ onUnmounted(() => {
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    /* background: rgba(20, 20, 20, 0.55); */
     padding: 0.4rem 0.9rem;
     border-radius: 50px;
-    /* box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25); */
     backdrop-filter: blur(10px);
-    z-index: 9999;
+    z-index: 10;
+    transition: opacity 0.3s;
 
     .play-btn {
       transition: transform 0.2s ease;
@@ -191,11 +182,10 @@ onUnmounted(() => {
       gap: 0.5rem;
       max-width: 960px;
       padding: 2rem;
-      background: linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.03),
-        rgba(0, 0, 0, 0.02)
-      );
+      background-image: url("https://cdn.pixabay.com/photo/2016/01/19/17/39/aqueduct-1143870_1280.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       border-radius: 12px;
       box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
     }
@@ -267,6 +257,11 @@ onUnmounted(() => {
 }
 
 @media screen and (max-width: 767px) {
+  .full-name {
+    font-size: 2.4rem !important;
+    margin-bottom: 0.3rem !important;
+  }
+
   .music-player {
     top: 0.5rem;
     right: 0.5rem;
@@ -287,5 +282,4 @@ onUnmounted(() => {
     }
   }
 }
-
 </style>

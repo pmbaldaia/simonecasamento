@@ -17,7 +17,7 @@
   align-items: center;
   text-align: center;
   padding: 2rem 1rem;
-  background-color: #f5f5f5;
+  background-color: #f9f6f2;
 
   .footer-message {
     font-family: $heading-font-family;
