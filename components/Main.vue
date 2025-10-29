@@ -20,7 +20,7 @@
       @click="scrollToTop"
       aria-label="Back to top"
     >
-      <img alt="Aqueduto" src="@/assets/images/aqueduto.png" />
+      <img alt="Aqueduto" src="@/assets/images/quinta.png" />
       <span class="up-arrow"></span>
     </button>
   </div>
