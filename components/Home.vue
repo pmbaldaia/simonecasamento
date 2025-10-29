@@ -29,8 +29,8 @@
             </svg>
             <img
               class="arch-illustration"
-              src="@/assets/images/aqueduto.png"
-              alt="Ilustração Aqueduto"
+              src="@/assets/images/quinta.png"
+              alt="Ilustração Quinta"
               loading="lazy"
               decoding="async"
             />
