@@ -5,12 +5,9 @@
       :style="{ transform: parallaxTransform }"
       aria-hidden="true"
     >
-      <v-img
+      <img
         src="https://cdn.pixabay.com/photo/2017/03/21/18/43/couple-2162950_1280.jpg"
-        :lazy-src="'https://cdn.pixabay.com/photo/2017/03/21/18/43/couple-2162950_640.jpg'"
         alt="Simone & João"
-        cover
-        :eager="false"
       />
       <div class="overlay"></div>
     </div>
@@ -64,7 +61,12 @@
       </div>
       <div class="scroll-gif-container" aria-hidden="true">
         <div class="scroll-gif">
-          <img alt="scroll" src="@/assets/images/scroll.gif" loading="lazy" decoding="async" />
+          <img
+            alt="scroll"
+            src="@/assets/images/scroll.gif"
+            loading="lazy"
+            decoding="async"
+          />
         </div>
       </div>
     </div>
@@ -138,7 +140,10 @@ onMounted(() => {
   const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
   prefersReducedMotion.value = mq.matches;
   if (mq.addEventListener) {
-    mq.addEventListener("change", (e) => (prefersReducedMotion.value = e.matches));
+    mq.addEventListener(
+      "change",
+      (e) => (prefersReducedMotion.value = e.matches)
+    );
   }
   window.addEventListener("scroll", handleScroll, { passive: true });
   handleScroll();
@@ -214,8 +219,9 @@ onUnmounted(() => {
     height: 130%;
     z-index: 1;
     overflow: hidden;
-    
-    :deep(img), :deep(.v-img__img) {
+
+    :deep(img),
+    :deep(.v-img__img) {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -339,10 +345,8 @@ onUnmounted(() => {
       line-height: 1;
       letter-spacing: 0.02em;
       opacity: 0.95;
-      color: lightgrey
+      color: lightgrey;
     }
-
-    
 
     .intro-text {
       font-family: $heading-font-family;
@@ -483,7 +487,7 @@ onUnmounted(() => {
   .couple-names .ampersand {
     font-size: 0.7em;
   }
-  
+
   .intro-text {
     font-size: 0.86rem;
     margin-bottom: 8px;
