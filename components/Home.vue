@@ -29,7 +29,7 @@
             </svg>
             <img
               class="arch-illustration"
-              src="@/assets/images/Aqueduto.png"
+              src="@/assets/images/aqueduto.png"
               alt="Ilustração Aqueduto"
               loading="lazy"
               decoding="async"
