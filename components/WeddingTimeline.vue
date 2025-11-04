@@ -137,7 +137,7 @@ const timeline = [
   .timeline {
     flex-wrap: wrap;
     justify-content: center;
-    gap: 2rem;
+    gap: 0rem;
   }
 
   .timeline-line {
