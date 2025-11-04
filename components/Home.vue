@@ -5,10 +5,7 @@
       :style="{ transform: parallaxTransform }"
       aria-hidden="true"
     >
-      <img
-        src="https://cdn.pixabay.com/photo/2017/03/21/18/43/couple-2162950_1280.jpg"
-        alt="Simone & João"
-      />
+      <img src="../assets/images/1U9A9624.JPG" alt="Simone & João" />
       <div class="overlay"></div>
     </div>
 
@@ -33,9 +30,8 @@
             />
 
             <h1 class="couple-names">
-              <span class="name">Simone</span>
-              <span class="ampersand">&</span>
-              <span class="name">João</span>
+              <span class="name">Simone &</span>
+              <span class="name">João Pedro</span>
             </h1>
 
             <p class="intro-text">
@@ -53,7 +49,8 @@
                 Agradecemos confirmação até 30 de abril de 2026
               </p>
               <p class="contacts">
-                Simone · 936 691 881&nbsp;&nbsp;|&nbsp;&nbsp;João · 961 748 963
+                Simone · 936 691 881&nbsp;&nbsp;|&nbsp;&nbsp;João Pedro · 961
+                748 963
               </p>
             </div>
           </div>
@@ -165,7 +162,7 @@ onUnmounted(() => {
 <style lang="scss" scoped>
 .home-parallax-container {
   position: relative;
-  height: 100vh;
+  min-height: 100vh;
   overflow: hidden;
 
   &.dark-bg {
@@ -176,21 +173,26 @@ onUnmounted(() => {
     );
   }
 
+  /* --- PLAYER DE MÚSICA --- */
   .music-player {
     position: fixed;
-    top: 1rem;
-    right: 1rem;
+    bottom: 0.8rem;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    padding: 0.4rem 0.9rem;
-    border-radius: 50px;
+    padding: 0.5rem 0.8rem;
+    border-radius: 30px;
     backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.45);
     z-index: 10;
     transition: opacity 0.3s;
 
     .play-btn {
       transition: transform 0.2s ease;
+      width: 34px;
+      height: 34px;
       &:hover {
         transform: scale(1.15);
       }
@@ -211,6 +213,7 @@ onUnmounted(() => {
     }
   }
 
+  /* --- PARALLAX --- */
   .parallax-background {
     position: absolute;
     top: 0;
@@ -225,6 +228,7 @@ onUnmounted(() => {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center;
       will-change: transform;
       filter: saturate(0.95) contrast(0.95);
     }
@@ -236,33 +240,32 @@ onUnmounted(() => {
     }
   }
 
+  /* --- CONTEÚDO PRINCIPAL --- */
   .home-content {
     position: relative;
     z-index: 2;
-    height: 100%;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 0 2rem;
+    padding: 1rem;
 
     .banner-wrapper {
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 1rem;
-      max-width: 980px;
+      max-width: 960px;
       width: 100%;
-      padding: 1.2rem;
-      background: transparent;
     }
 
     .arch-card {
       position: relative;
       width: 100%;
-      max-width: clamp(520px, 80vw, 760px);
-      padding: 18px;
+      max-width: clamp(480px, 80vw, 760px);
+      padding: 10px;
       z-index: 2;
     }
 
@@ -273,13 +276,12 @@ onUnmounted(() => {
       border: 2px solid rgba(0, 0, 0, 0.06);
       border-bottom-width: 4px;
       border-radius: 520px 520px 18px 18px;
-      padding: clamp(28px, 3vw, 36px) clamp(20px, 2.5vw, 28px)
-        clamp(24px, 3vw, 32px);
+      padding: clamp(24px, 3vw, 36px);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 1.8em;
+      gap: 1.6em;
       min-height: clamp(420px, 56vh, 560px);
       box-shadow: 0 18px 60px rgba(0, 0, 0, 0.25);
       overflow: hidden;
@@ -290,12 +292,12 @@ onUnmounted(() => {
       position: absolute;
       inset: 10px;
       border: 1px solid rgba(0, 0, 0, 0.08);
-      border-radius: 520px 520px 14px 14px;
+      border-radius: inherit;
       pointer-events: none;
     }
 
     .arch-illustration {
-      width: clamp(92px, 12vw, 180px);
+      width: clamp(92px, 12vw, 160px);
       margin: 0 auto 18px;
       display: block;
     }
@@ -308,94 +310,77 @@ onUnmounted(() => {
       height: 34px;
       transform: translateX(-50%);
       pointer-events: none;
-    }
-    .arch-top-stroke path {
-      fill: none;
-      stroke: rgba(0, 0, 0, 0.1);
-      stroke-width: 1.5;
+
+      path {
+        fill: none;
+        stroke: rgba(0, 0, 0, 0.1);
+        stroke-width: 1.5;
+      }
     }
 
     .couple-names {
       font-family: "Giordano Gold Serif", serif;
-      font-size: clamp(2.4rem, 4.2vw, 3.6rem);
-      color: #8a3e1f;
-      margin: 2px 0 8px;
-      font-weight: 300;
-      letter-spacing: 0.02em;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      color: transparent;
       background: linear-gradient(180deg, #cf8661 0%, #b55b36 100%);
       -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
       -webkit-text-stroke: 0.2px rgba(0, 0, 0, 0.1);
       text-shadow: 0 2px 3px rgba(0, 0, 0, 0.14),
         0 -1px 0 rgba(255, 255, 255, 0.32);
-      display: inline-flex;
+      display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 0.4rem;
-      font-style: normal;
+      gap: 0.15rem;
     }
 
-    .couple-names .name {
-      font-style: normal;
-    }
-
-    .couple-names .ampersand {
-      font-style: normal;
-      font-size: 0.6em;
-      line-height: 1;
-      letter-spacing: 0.02em;
-      opacity: 0.95;
-      color: lightgrey;
+    .intro-text,
+    .day-strong,
+    .time,
+    .venue,
+    .rsvp {
+      font-family: $heading-font-family;
+      color: #635a53;
+      line-height: 1.4;
     }
 
     .intro-text {
-      font-family: $heading-font-family;
-      font-size: 1rem;
-      letter-spacing: 0.04em;
-      color: #635a53;
-      margin: 0 0 14px;
+      font-size: clamp(0.9rem, 2vw, 1rem);
+      margin-bottom: 0.6rem;
     }
 
     .day-strong {
-      font-family: $heading-font-family;
       color: #8a3e1f;
       text-transform: uppercase;
       font-weight: 600;
       letter-spacing: 0.06em;
-      margin: 8px 0 10px;
+      margin: 6px 0 10px;
     }
 
     .time {
-      font-family: $heading-font-family;
       color: #6a625a;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      margin: 2px 0 4px;
+      font-size: 0.9rem;
+      margin: 4px 0;
     }
 
     .venue {
-      font-family: $heading-font-family;
       color: #d07b43;
-      font-size: 1.4rem;
-      letter-spacing: 0.06em;
+      font-size: 1.1rem;
       text-transform: uppercase;
-      margin: 0 0 14px;
+      letter-spacing: 0.06em;
+      margin: 0 0 12px;
     }
 
     .rsvp {
-      text-align: center;
+      font-size: 0.9rem;
       color: #6b6763;
-      font-family: $heading-font-family;
-      font-size: 0.95rem;
-    }
+      text-align: center;
 
-    .rsvp-deadline {
-      margin: 2px 0 8px;
-      opacity: 0.9;
-    }
-
-    .contacts {
-      letter-spacing: 0.06em;
+      .rsvp-deadline {
+        margin-bottom: 6px;
+        opacity: 0.9;
+      }
     }
 
     .scroll-gif-container {
@@ -428,146 +413,79 @@ onUnmounted(() => {
   }
 }
 
-@media screen and (max-width: 767px) {
-  .music-player {
-    top: 0.5rem;
-    right: 0.5rem;
-    padding: 0.3rem 0.4rem;
-    gap: 0.3rem;
+/* --- MOBILE PEQUENO (iPhone SE, <360px) --- */
+@media screen and (max-width: 360px) {
+  .home-parallax-container {
+    min-height: 100vh;
+    overflow: visible;
 
-    .progress-bar {
-      display: none;
-    }
-
-    .play-btn {
-      width: 30px;
-      height: 30px;
-
-      v-icon {
-        font-size: 18px !important;
+    .parallax-background {
+      height: 110%;
+      img {
+        object-position: center top;
       }
     }
-  }
 
-  .arch-card {
-    max-width: 98vw;
-  }
+    .home-content {
+      padding: 0.8rem;
 
-  .arch-inner {
-    padding: 18px 12px 18px;
-    border-radius: 420px 420px 16px 16px;
-    min-height: 394px;
-    gap: 1em;
-  }
-  .arch-inner::after {
-    inset: 8px;
-    border-radius: 420px 420px 12px 12px;
-  }
-  .arch-illustration {
-    width: 84px;
-    margin-bottom: 10px;
-  }
-  .couple-names {
-    font-size: clamp(1.35rem, 5.2vw, 1.7rem);
-    white-space: normal;
-    gap: 0.25rem;
-    letter-spacing: 0.005em;
-    line-height: 1.05;
-  }
-  .couple-names .name {
-    display: inline;
-  }
-  .couple-names {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.1rem;
-    text-align: center;
-  }
-  .couple-names .ampersand {
-    font-size: 0.7em;
-  }
+      .arch-card {
+        max-width: 94vw;
+      }
 
-  .intro-text {
-    font-size: 0.86rem;
-    margin-bottom: 8px;
-  }
-  .day-strong {
-    font-size: 0.86rem;
-  }
-  .time {
-    font-size: 0.78rem;
-    letter-spacing: 0.1em;
-  }
-  .venue {
-    font-size: 0.98rem;
-  }
-  .rsvp {
-    font-size: 0.86rem;
-  }
-  .contacts {
-    letter-spacing: 0.04em;
-  }
-  .scroll-gif-container {
-    bottom: 1.2rem;
-  }
-  .scroll-gif-container .scroll-gif {
-    width: 54px;
+      .arch-inner {
+        padding: 18px 14px;
+        border-radius: 320px 320px 12px 12px;
+        min-height: auto;
+        gap: 0.7em;
+      }
+
+      .arch-illustration {
+        width: 70px;
+        margin-bottom: 8px;
+      }
+
+      .couple-names {
+        font-size: 1.3rem;
+      }
+      .intro-text,
+      .day-strong,
+      .time,
+      .venue,
+      .rsvp {
+        font-size: 0.85rem;
+      }
+    }
+
+    .music-player {
+      bottom: 0.4rem;
+      .progress-bar {
+        display: none;
+      }
+    }
+
+    .scroll-gif-container {
+      display: none;
+    }
   }
 }
 
-@media screen and (max-width: 768px) {
-  .arch-card {
-    max-width: 680px;
-  }
-  .arch-inner {
-    padding: 32px 24px 28px;
-    min-height: 500px;
-    gap: 1.2em;
-    border-radius: 480px 480px 18px 18px;
-  }
-  .arch-inner::after {
-    inset: 9px;
-    border-radius: 480px 480px 14px 14px;
-  }
-  .arch-top-stroke {
-    width: 66%;
-  }
-}
-
-@media (max-width: 420px) {
-  .home-parallax-container .banner-wrapper {
-    padding: 0.8rem;
-  }
-  .home-parallax-container .scroll-gif-container {
-    display: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .home-parallax-container .scroll-gif {
-    animation: none !important;
-  }
-}
-
+/* --- TABLET --- */
 @media screen and (min-width: 768px) and (max-width: 1023px) {
   .arch-card {
     max-width: 680px;
   }
   .arch-inner {
     padding: 32px 24px 28px;
-    min-height: 500px;
-    border-radius: 480px 480px 18px 18px;
+    min-height: 480px;
+    border-radius: 460px 460px 18px 18px;
   }
-  .arch-inner::after {
-    inset: 9px;
-    border-radius: 480px 480px 14px 14px;
-  }
-  .arch-top-stroke {
-    width: 66%;
+  .arch-illustration {
+    width: 140px;
   }
 }
 
+/* --- LAPTOP MÉDIO --- */
 @media screen and (min-width: 1024px) and (max-width: 1439px) {
   .arch-card {
     max-width: 740px;
@@ -575,8 +493,12 @@ onUnmounted(() => {
   .arch-inner {
     min-height: 520px;
   }
+  .arch-illustration {
+    width: 160px;
+  }
 }
 
+/* --- DESKTOP GRANDE --- */
 @media screen and (min-width: 1440px) {
   .arch-card {
     max-width: 860px;
@@ -586,19 +508,11 @@ onUnmounted(() => {
     min-height: 580px;
     border-radius: 560px 560px 20px 20px;
   }
-  .arch-inner::after {
-    inset: 12px;
-    border-radius: 560px 560px 16px 16px;
-  }
   .arch-illustration {
     width: 200px;
   }
-  .arch-top-stroke {
-    width: 58%;
-    height: 38px;
-  }
   .couple-names {
-    font-size: 4rem;
+    font-size: 3.5rem;
   }
 }
 </style>

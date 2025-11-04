@@ -7,7 +7,7 @@
     <transition name="fade">
       <v-container fluid class="pa-0 main-content">
         <Home />
-        <About />
+        <WeddingTimeline />
         <Map />
         <Lodging />
         <Footer />
@@ -29,7 +29,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
 import Home from "@/components/Home.vue";
-import About from "@/components/About.vue";
+import WeddingTimeline from "~/components/WeddingTimeline.vue";
 import Map from "@/components/Map.vue";
 import Footer from "@/components/Footer.vue";
 import Lodging from "./Lodging.vue";
@@ -119,12 +119,12 @@ onUnmounted(() => {
 
   .up-arrow {
     position: absolute;
-    top: 6px; 
+    top: 6px;
     width: 0;
     height: 0;
-    border-left: 4px solid transparent;  
-    border-right: 4px solid transparent; 
-    border-bottom: 5px solid $black-color; 
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-bottom: 5px solid $black-color;
     pointer-events: none;
   }
 
