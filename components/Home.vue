@@ -5,57 +5,25 @@
       :style="{ transform: parallaxTransform }"
       aria-hidden="true"
     >
-      <img src="../assets/images/1U9A9624.JPG" alt="Simone & João" />
+      <img src="@/assets/images/1U9A9605.JPG" alt="Simone & João" />
       <div class="overlay"></div>
     </div>
 
     <div class="home-content">
       <div class="banner-wrapper">
-        <div class="arch-card" data-aos="fade-up" data-aos-duration="900">
-          <div class="arch-inner">
-            <svg
-              class="arch-top-stroke"
-              viewBox="0 0 100 50"
-              preserveAspectRatio="none"
-              aria-hidden="true"
-            >
-              <path d="M0,50 A50,50 0 0 1 100,50" />
-            </svg>
-            <img
-              class="arch-illustration"
-              src="@/assets/images/quinta.png"
-              alt="Ilustração Quinta"
-              loading="lazy"
-              decoding="async"
-            />
-
-            <h1 class="couple-names">
-              <span class="name">Simone &</span>
-              <span class="name">João Pedro</span>
-            </h1>
-
-            <p class="intro-text">
-              É com muita alegria que vos convidamos<br />
-              para o nosso casamento
-            </p>
-
-            <p class="day-strong">Sábado, 11 de julho de 2026</p>
-
-            <p class="time">Pelas 14h30 no</p>
-            <p class="venue">Aqueduto Eventos</p>
-
-            <div class="rsvp">
-              <p class="rsvp-deadline">
-                Agradecemos confirmação até 30 de abril de 2026
-              </p>
-              <p class="contacts">
-                Simone · 936 691 881&nbsp;&nbsp;|&nbsp;&nbsp;João Pedro · 961
-                748 963
-              </p>
-            </div>
-          </div>
-        </div>
+        <h1 class="couple-names">
+          <span class="name">Simone &</span>
+          <span class="name">João Pedro</span>
+        </h1>
       </div>
+
+      <div class="intro-bottom" aria-hidden="false">
+        <p class="intro-text">
+          É com muita alegria que vos convidamos<br />
+          para o nosso casamento
+        </p>
+      </div>
+
       <div class="scroll-gif-container" aria-hidden="true">
         <div class="scroll-gif">
           <img
@@ -76,9 +44,9 @@
         class="play-btn"
         @click="togglePlay"
       >
-        <v-icon size="26" color="white">
-          {{ isPlaying ? "mdi-pause" : "mdi-play" }}
-        </v-icon>
+        <v-icon size="26" color="white">{{
+          isPlaying ? "mdi-pause" : "mdi-play"
+        }}</v-icon>
       </v-btn>
 
       <div class="progress-bar">
@@ -111,6 +79,10 @@ const parallaxTransform = computed(() => {
 });
 
 let ticking = false;
+let mq = null;
+let audioEl = null;
+let onMqChange = null;
+
 function handleScroll() {
   if (!ticking) {
     window.requestAnimationFrame(() => {
@@ -134,28 +106,53 @@ function togglePlay() {
 }
 
 onMounted(() => {
-  const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+  mq = window.matchMedia("(prefers-reduced-motion: reduce)");
   prefersReducedMotion.value = mq.matches;
+  onMqChange = (e) => (prefersReducedMotion.value = e.matches);
   if (mq.addEventListener) {
-    mq.addEventListener(
-      "change",
-      (e) => (prefersReducedMotion.value = e.matches)
-    );
+    mq.addEventListener("change", onMqChange);
+  } else if (mq.addListener) {
+    mq.addListener(onMqChange);
   }
+
   window.addEventListener("scroll", handleScroll, { passive: true });
   handleScroll();
-  const el = audio.value;
-  if (el) {
-    el.addEventListener("play", () => (isPlaying.value = true));
-    el.addEventListener("pause", () => (isPlaying.value = false));
-    el.addEventListener("timeupdate", () => {
-      progress.value = (el.currentTime / el.duration) * 100 || 0;
-    });
+
+  audioEl = audio.value;
+  if (audioEl) {
+    const onPlay = () => (isPlaying.value = true);
+    const onPause = () => (isPlaying.value = false);
+    const onTime = () => {
+      progress.value = (audioEl.currentTime / audioEl.duration) * 100 || 0;
+    };
+    audioEl.addEventListener("play", onPlay);
+    audioEl.addEventListener("pause", onPause);
+    audioEl.addEventListener("timeupdate", onTime);
+    audioEl.__onPlay = onPlay;
+    audioEl.__onPause = onPause;
+    audioEl.__onTime = onTime;
   }
 });
 
 onUnmounted(() => {
   window.removeEventListener("scroll", handleScroll);
+
+  if (mq) {
+    if (mq.removeEventListener) {
+      mq.removeEventListener("change", onMqChange);
+    } else if (mq.removeListener) {
+      mq.removeListener(onMqChange);
+    }
+  }
+
+  if (audioEl) {
+    if (audioEl.__onPlay) audioEl.removeEventListener("play", audioEl.__onPlay);
+    if (audioEl.__onPause)
+      audioEl.removeEventListener("pause", audioEl.__onPause);
+    if (audioEl.__onTime)
+      audioEl.removeEventListener("timeupdate", audioEl.__onTime);
+    audioEl.__onPlay = audioEl.__onPause = audioEl.__onTime = null;
+  }
 });
 </script>
 
@@ -164,7 +161,6 @@ onUnmounted(() => {
   position: relative;
   min-height: 100vh;
   overflow: hidden;
-
   &.dark-bg {
     background: linear-gradient(
       180deg,
@@ -173,12 +169,12 @@ onUnmounted(() => {
     );
   }
 
-  /* --- PLAYER DE MÚSICA --- */
   .music-player {
     position: fixed;
-    bottom: 0.8rem;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 50px;
+    right: 50px;
+    left: auto;
+    transform: none;
     display: flex;
     align-items: center;
     gap: 0.6rem;
@@ -186,220 +182,158 @@ onUnmounted(() => {
     border-radius: 30px;
     backdrop-filter: blur(10px);
     background: rgba(0, 0, 0, 0.45);
-    z-index: 10;
-    transition: opacity 0.3s;
-
-    .play-btn {
-      transition: transform 0.2s ease;
-      width: 34px;
-      height: 34px;
-      &:hover {
-        transform: scale(1.15);
-      }
-    }
-
-    .progress-bar {
-      width: 110px;
-      height: 4px;
-      background: rgba(255, 255, 255, 0.25);
-      border-radius: 3px;
-      overflow: hidden;
-
-      .progress {
-        height: 100%;
-        background: #f1c40f;
-        transition: width 0.2s linear;
-      }
-    }
+    z-index: 9999;
+    transition: opacity 0.25s ease, transform 0.18s ease;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.22);
   }
 
-  /* --- PARALLAX --- */
+  .music-player .play-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    padding: 0;
+    border-radius: 50%;
+    transition: transform 0.18s ease;
+  }
+
+  .music-player .play-btn:hover {
+    transform: scale(1.12);
+  }
+
+  .music-player .play-btn:active {
+    transform: scale(0.98);
+  }
+
+  .music-player .progress-bar {
+    width: 110px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.22);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .music-player .progress-bar .progress {
+    height: 100%;
+    background: #f1c40f;
+    width: 0%;
+    transition: width 0.18s linear;
+  }
+
   .parallax-background {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 130%;
-    z-index: 1;
     overflow: hidden;
-
-    :deep(img),
-    :deep(.v-img__img) {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      will-change: transform;
-      filter: saturate(0.95) contrast(0.95);
-    }
-
-    .overlay {
-      position: absolute;
-      inset: 0;
-      background-color: rgba(0, 0, 0, 0.35);
-    }
+    z-index: 1;
   }
 
-  /* --- CONTEÚDO PRINCIPAL --- */
+  .parallax-background :deep(img),
+  .parallax-background :deep(.v-img__img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 70% 50%;
+    filter: saturate(0.95) contrast(0.95);
+  }
+
+  .parallax-background .overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+  }
+
   .home-content {
     position: relative;
     z-index: 2;
     min-height: 100vh;
+    padding: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 1rem;
+  }
 
-    .banner-wrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-      max-width: 960px;
-      width: 100%;
-    }
+  .banner-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 960px;
+    width: 100%;
+    gap: 1rem;
+    padding: 24px;
+    background: transparent;
+  }
 
-    .arch-card {
-      position: relative;
-      width: 100%;
-      max-width: clamp(480px, 80vw, 760px);
-      padding: 10px;
-      z-index: 2;
-    }
+  .intro-bottom {
+    position: absolute;
+    bottom: 5.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    width: 100%;
+    pointer-events: none;
+    padding: 0 1rem;
+  }
 
-    .arch-inner {
-      position: relative;
-      background: rgba(255, 255, 255, 0.92);
-      color: #4a3f35;
-      border: 2px solid rgba(0, 0, 0, 0.06);
-      border-bottom-width: 4px;
-      border-radius: 520px 520px 18px 18px;
-      padding: clamp(24px, 3vw, 36px);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 1.6em;
-      min-height: clamp(420px, 56vh, 560px);
-      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.25);
-      overflow: hidden;
-    }
+  .intro-bottom .intro-text {
+    margin: 0;
+    font-family: $body-font-family !important;
+    font-style: italic;
+    font-size: clamp(1.1rem, 2.4vw, 1.6rem);
+    color: #ffffff;
+    line-height: 1.5;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+    padding: 8px 14px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.02);
+  }
 
-    .arch-inner::after {
-      content: "";
-      position: absolute;
-      inset: 10px;
-      border: 1px solid rgba(0, 0, 0, 0.08);
-      border-radius: inherit;
-      pointer-events: none;
-    }
+  .couple-names {
+    font-family: "Cormorant", serif !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    line-height: 1;
+    transform: translateY(-80%);
+    transition: transform 0.22s ease;
+  }
 
-    .arch-illustration {
-      width: clamp(92px, 12vw, 160px);
-      margin: 0 auto 18px;
-      display: block;
-    }
+  .couple-names .name {
+    display: block;
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    /* color: $copper-solid; */
+    color: #924714;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-    .arch-top-stroke {
-      position: absolute;
-      top: 10px;
-      left: 50%;
-      width: 62%;
-      height: 34px;
-      transform: translateX(-50%);
-      pointer-events: none;
+  .scroll-gif-container {
+    bottom: 1.5rem;
+    width: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    z-index: 3;
+  }
 
-      path {
-        fill: none;
-        stroke: rgba(0, 0, 0, 0.1);
-        stroke-width: 1.5;
-      }
-    }
+  .scroll-gif-container .scroll-gif {
+    width: 70px;
+    animation: bounce 2s infinite ease-in-out;
+  }
 
-    .couple-names {
-      font-family: "Giordano Gold Serif", serif;
-      font-size: clamp(1.8rem, 5vw, 3rem);
-      color: transparent;
-      background: linear-gradient(180deg, #cf8661 0%, #b55b36 100%);
-      -webkit-background-clip: text;
-      -webkit-text-stroke: 0.2px rgba(0, 0, 0, 0.1);
-      text-shadow: 0 2px 3px rgba(0, 0, 0, 0.14),
-        0 -1px 0 rgba(255, 255, 255, 0.32);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.15rem;
-    }
-
-    .intro-text,
-    .day-strong,
-    .time,
-    .venue,
-    .rsvp {
-      font-family: $heading-font-family;
-      color: #635a53;
-      line-height: 1.4;
-    }
-
-    .intro-text {
-      font-size: clamp(0.9rem, 2vw, 1rem);
-      margin-bottom: 0.6rem;
-    }
-
-    .day-strong {
-      color: #8a3e1f;
-      text-transform: uppercase;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      margin: 6px 0 10px;
-    }
-
-    .time {
-      color: #6a625a;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      font-size: 0.9rem;
-      margin: 4px 0;
-    }
-
-    .venue {
-      color: #d07b43;
-      font-size: 1.1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin: 0 0 12px;
-    }
-
-    .rsvp {
-      font-size: 0.9rem;
-      color: #6b6763;
-      text-align: center;
-
-      .rsvp-deadline {
-        margin-bottom: 6px;
-        opacity: 0.9;
-      }
-    }
-
-    .scroll-gif-container {
-      position: absolute;
-      bottom: 2rem;
-      width: 100%;
-      display: flex;
-      justify-content: center;
-
-      .scroll-gif {
-        width: 70px;
-        animation: bounce 2s infinite ease-in-out;
-
-        img {
-          width: 100%;
-          display: block;
-        }
-      }
-    }
+  .scroll-gif-container .scroll-gif img {
+    width: 100%;
+    display: block;
   }
 
   @keyframes bounce {
@@ -413,106 +347,64 @@ onUnmounted(() => {
   }
 }
 
-/* --- MOBILE PEQUENO (iPhone SE, <360px) --- */
-@media screen and (max-width: 360px) {
-  .home-parallax-container {
-    min-height: 100vh;
-    overflow: visible;
-
-    .parallax-background {
-      height: 110%;
-      img {
-        object-position: center top;
-      }
-    }
-
-    .home-content {
-      padding: 0.8rem;
-
-      .arch-card {
-        max-width: 94vw;
-      }
-
-      .arch-inner {
-        padding: 18px 14px;
-        border-radius: 320px 320px 12px 12px;
-        min-height: auto;
-        gap: 0.7em;
-      }
-
-      .arch-illustration {
-        width: 70px;
-        margin-bottom: 8px;
-      }
-
-      .couple-names {
-        font-size: 1.3rem;
-      }
-      .intro-text,
-      .day-strong,
-      .time,
-      .venue,
-      .rsvp {
-        font-size: 0.85rem;
-      }
-    }
-
-    .music-player {
-      bottom: 0.4rem;
-      .progress-bar {
-        display: none;
-      }
-    }
-
-    .scroll-gif-container {
-      display: none;
-    }
+@media (max-width: 480px) {
+  .home-parallax-container.parallax-mobile .parallax-background :deep(img),
+  .home-parallax-container .parallax-background :deep(img),
+  .home-parallax-container .parallax-background :deep(.v-img__img) {
+    object-position: 56% 50% !important;
   }
-}
 
-/* --- TABLET --- */
-@media screen and (min-width: 768px) and (max-width: 1023px) {
-  .arch-card {
-    max-width: 680px;
+  .home-parallax-container .home-content .couple-names {
+    transform: translateY(-150%) !important;
   }
-  .arch-inner {
-    padding: 32px 24px 28px;
-    min-height: 480px;
-    border-radius: 460px 460px 18px 18px;
-  }
-  .arch-illustration {
-    width: 140px;
-  }
-}
 
-/* --- LAPTOP MÉDIO --- */
-@media screen and (min-width: 1024px) and (max-width: 1439px) {
-  .arch-card {
-    max-width: 740px;
+  .music-player {
+    right: 2rem !important;
+    left: auto !important;
+    transform: none !important;
+    padding: 0 !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    border-radius: 0 !important;
+    gap: 0 !important;
+    box-shadow: none !important;
   }
-  .arch-inner {
-    min-height: 520px;
-  }
-  .arch-illustration {
-    width: 160px;
-  }
-}
 
-/* --- DESKTOP GRANDE --- */
-@media screen and (min-width: 1440px) {
-  .arch-card {
-    max-width: 860px;
+  .music-player .progress-bar {
+    display: none !important;
   }
-  .arch-inner {
-    padding: 40px 32px 34px;
-    min-height: 580px;
-    border-radius: 560px 560px 20px 20px;
+
+  .music-player .play-btn {
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
-  .arch-illustration {
-    width: 200px;
+
+  .home-parallax-container .home-content .banner-wrapper {
+    max-width: 94vw;
+    padding: 18px 14px;
   }
-  .couple-names {
-    font-size: 3.5rem;
+
+  .home-parallax-container .home-content .couple-names .name {
+    font-size: 1.6rem;
+    letter-spacing: 0.12em;
+  }
+
+  .home-parallax-container .home-content .intro-bottom {
+    bottom: 5rem;
+  }
+
+  .home-parallax-container .home-content .intro-bottom .intro-text {
+    font-size: clamp(1.05rem, 4.5vw, 1.4rem);
+  }
+
+  .scroll-gif-container {
+    display: none;
   }
 }
 </style>

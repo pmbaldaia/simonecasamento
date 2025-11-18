@@ -1,11 +1,15 @@
 <template>
   <v-container fluid class="map-section py-12">
-    <v-row justify="center">
-      <v-col cols="12" md="8" class="text-center">
-        <h2 class="section-title">Onde Celebramos</h2>
-        <p class="address">Travessa Alto das Póvoas 96</p>
+    <v-row class="map-row" align="center" justify="center">
+      <v-col cols="12" md="4" class="image-col">
+        <div class="map-image"></div>
+      </v-col>
+
+      <v-col cols="12" md="4" class="info-col text-center">
+        <p class="address">Aqueduto Eventos</p>
+        <p class="city">Travessa Alto das Póvoas 96</p>
         <p class="city">Póvoa de Varzim</p>
-        <p class="coordinates">41.422609680721095, -8.730484099999998</p>
+
         <v-btn
           class="map-btn mt-2"
           rounded="xl"
@@ -28,16 +32,32 @@
 
 .map-section {
   background-color: vars.$offwhite-color;
-  text-align: center;
   padding-inline: 1.5rem;
 
-  .section-title {
-    font-family: vars.$heading-font-family;
-    font-size: 2.8rem;
-    color: vars.$gold-color;
-    margin-bottom: 2rem;
-    line-height: 1.2;
-    font-weight: 600;
+  .map-row {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .image-col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .map-image {
+    width: 100%;
+    height: 200px;
+    background-image: url("../assets/images/Desenho.png");
+    background-size: contain;
+    background-position: center;
+    border-radius: 16px;
+  }
+
+  .info-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .address {
@@ -77,39 +97,16 @@
     }
   }
 
+  /* RESPONSIVE */
   @media (max-width: 960px) {
-    .section-title {
-      font-size: 2.2rem;
-    }
-
-    .address {
-      font-size: 1.25rem;
-    }
-
-    .city {
-      font-size: 1rem;
-    }
-
-    .coordinates {
-      font-size: 0.9rem;
+    .map-image {
+      height: 220px;
     }
   }
 
   @media (max-width: 600px) {
-    .section-title {
-      font-size: 1.8rem;
-    }
-
-    .address {
-      font-size: 1.1rem;
-    }
-
-    .city {
-      font-size: 0.95rem;
-    }
-
-    .coordinates {
-      font-size: 0.85rem;
+    .map-image {
+      height: 200px;
     }
   }
 }

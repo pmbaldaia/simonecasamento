@@ -1,8 +1,274 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Poppins:wght@300;400;500&display=swap");
+/* ===========================
+   CORMORANT — BASE
+=========================== */
 @font-face {
-  font-family: "Giordano Gold Serif";
-  src: url("../font/Giordano Gold Serif.ttf") format("truetype");
-  font-weight: normal;
+  font-family: "Cormorant";
+  src: url("@/assets/font/Cormorant/Cormorant-Light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant";
+  src: url("@/assets/font/Cormorant/Cormorant-LightItalic.otf")
+    format("opentype");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant";
+  src: url("@/assets/font/Cormorant/Cormorant-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant";
+  src: url("@/assets/font/Cormorant/Cormorant-RegularItalic.otf")
+    format("opentype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant";
+  src: url("@/assets/font/Cormorant/Cormorant-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant";
+  src: url("@/assets/font/Cormorant/Cormorant-MediumItalic.otf")
+    format("opentype");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant";
+  src: url("@/assets/font/Cormorant/Cormorant-Semi.otf") format("opentype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant";
+  src: url("@/assets/font/Cormorant/Cormorant-SemiItalic.otf")
+    format("opentype");
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant";
+  src: url("@/assets/font/Cormorant/Cormorant-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant";
+  src: url("@/assets/font/Cormorant/Cormorant-BoldItalic.otf")
+    format("opentype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ===========================
+   CORMORANT INFANT
+=========================== */
+@font-face {
+  font-family: "Cormorant Infant";
+  src: url("@/assets/font/Cormorant/CormorantInfant-Light.otf")
+    format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant Infant";
+  src: url("@/assets/font/Cormorant/CormorantInfant-Regular.otf")
+    format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant Infant";
+  src: url("@/assets/font/Cormorant/CormorantInfant-Medium.otf")
+    format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant Infant";
+  src: url("@/assets/font/Cormorant/CormorantInfant-Semi.otf")
+    format("opentype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant Infant";
+  src: url("@/assets/font/Cormorant/CormorantInfant-Bold.otf")
+    format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ===========================
+   CORMORANT SC
+=========================== */
+@font-face {
+  font-family: "Cormorant SC";
+  src: url("@/assets/font/Cormorant/CormorantSC-Light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant SC";
+  src: url("@/assets/font/Cormorant/CormorantSC-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant SC";
+  src: url("@/assets/font/Cormorant/CormorantSC-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant SC";
+  src: url("@/assets/font/Cormorant/CormorantSC-Semi.otf") format("opentype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant SC";
+  src: url("@/assets/font/Cormorant/CormorantSC-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ===========================
+   CORMORANT UNICASE
+=========================== */
+@font-face {
+  font-family: "Cormorant Unicase";
+  src: url("@/assets/font/Cormorant/CormorantUnicase-Light.otf")
+    format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant Unicase";
+  src: url("@/assets/font/Cormorant/CormorantUnicase-Regular.otf")
+    format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant Unicase";
+  src: url("@/assets/font/Cormorant/CormorantUnicase-Medium.otf")
+    format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant Unicase";
+  src: url("@/assets/font/Cormorant/CormorantUnicase-Semi.otf")
+    format("opentype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant Unicase";
+  src: url("@/assets/font/Cormorant/CormorantUnicase-Bold.otf")
+    format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ===========================
+   CORMORANT UPRIGHT
+=========================== */
+@font-face {
+  font-family: "Cormorant Upright";
+  src: url("@/assets/font/Cormorant/CormorantUpright-Light.otf")
+    format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant Upright";
+  src: url("@/assets/font/Cormorant/CormorantUpright-Regular.otf")
+    format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant Upright";
+  src: url("@/assets/font/Cormorant/CormorantUpright-Medium.otf")
+    format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant Upright";
+  src: url("@/assets/font/Cormorant/CormorantUpright-Semi.otf")
+    format("opentype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant Upright";
+  src: url("@/assets/font/Cormorant/CormorantUpright-Bold.otf")
+    format("opentype");
+  font-weight: 700;
   font-style: normal;
   font-display: swap;
 }

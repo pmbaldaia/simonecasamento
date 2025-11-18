@@ -7,9 +7,11 @@
     <transition name="fade">
       <v-container fluid class="pa-0 main-content">
         <Home />
+        <Address />
         <WeddingTimeline />
         <Map />
         <Lodging />
+        <Image />
         <Footer />
       </v-container>
     </transition>
@@ -20,8 +22,7 @@
       @click="scrollToTop"
       aria-label="Back to top"
     >
-      <img alt="Aqueduto" src="@/assets/images/quinta.png" />
-      <span class="up-arrow"></span>
+      <img alt="Aqueduto" src="@/assets/images/nome_siglas.png" />
     </button>
   </div>
 </template>
@@ -68,7 +69,7 @@ onUnmounted(() => {
 
 .logo-ring {
   position: fixed;
-  top: 20px;
+  top: 50px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10000;

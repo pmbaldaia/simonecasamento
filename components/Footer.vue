@@ -9,8 +9,6 @@
         "O amor tudo suporta, tudo crê, tudo espera, tudo suporta." – 1
         Coríntios 13:7
       </div>
-
-      <div class="copyright">© 2026 Simone Loureiro & João Freire</div>
     </div>
   </v-container>
 </template>
@@ -25,7 +23,7 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  min-height: 30vh;
+  min-height: 60vh;
   background-color: #f9f6f2;
   overflow: hidden;
   padding: 2.5rem 1rem;
@@ -35,16 +33,13 @@
     inset: 0;
     pointer-events: none;
     z-index: 0;
-    opacity: 0.25;
+    opacity: 0.75;
 
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center 55%;
-      filter: saturate(0.9) contrast(0.95) brightness(0.95) blur(0.5px);
-      transform: scale(1.05);
-      transition: object-position 0.4s ease;
+      object-position: center 60%;
     }
   }
 
@@ -53,6 +48,7 @@
     z-index: 1;
     display: flex;
     flex-direction: column;
+    bottom: 210px;
     align-items: center;
     justify-content: center;
     gap: 1.5rem;
@@ -80,8 +76,12 @@
   }
 
   @media screen and (max-width: 767px) {
-    min-height: 25vh;
+    min-height: 40vh;
     padding: 2rem 1rem;
+
+    .footer-content {
+      bottom: 100px;
+    }
 
     .footer-message {
       font-size: 1rem;

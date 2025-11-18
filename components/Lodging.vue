@@ -2,7 +2,7 @@
   <v-container fluid class="alojamento-section py-14">
     <v-row justify="center">
       <v-col cols="12" md="10" class="text-center">
-        <h2 class="section-title mb-10">Sugestões de Alojamento</h2>
+        <h2 class="section-title mb-10">Alojamento</h2>
 
         <div class="alojamento-wrapper">
           <div class="alojamento-list">
@@ -11,8 +11,7 @@
               :key="index"
               class="alojamento-card"
             >
-              <h3 class="hotel-nome">Sugestão {{ index + 1 }}</h3>
-              <p class="hotel-endereco">{{ hotel.nome }}</p>
+              <p class="hotel-nome">{{ hotel.nome }}</p>
               <v-btn
                 :href="hotel.link"
                 target="_blank"
