@@ -40,7 +40,7 @@
 .overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
+  background: rgba(0, 0, 0, 0.25);
 }
 
 .image-text {
@@ -61,7 +61,7 @@
   padding: 0.1rem 0;
   font-family: vars.$heading-font-family;
   font-weight: 500;
-  text-shadow: 0 6px 20px rgba(0, 0, 0, 0.55);
+  text-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
   letter-spacing: 0.02em;
   line-height: 1.35;
 }
@@ -92,7 +92,7 @@
     height: 380px;
   }
   .overlay {
-    background: rgba(0, 0, 0, 0.55);
+    background: rgba(0, 0, 0, 0.25);
   }
   .image-text {
     width: min(94%, 640px);
