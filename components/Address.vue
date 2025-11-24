@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="map-section py-12">
+  <v-container fluid class="map-section">
     <v-row class="map-row" align="center" justify="center" no-gutters>
       <v-col cols="12" md="4" class="info-col text-center">
         <p class="address">Aqueduto Eventos</p>

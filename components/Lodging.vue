@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="alojamento-section py-14">
+  <v-container fluid class="alojamento-section">
     <v-row justify="center">
       <v-col cols="12" md="10" class="text-center">
         <h2 class="section-title mb-10">Alojamento</h2>
