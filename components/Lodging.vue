@@ -25,7 +25,7 @@
               <v-btn
                 :href="hotel.link"
                 target="_blank"
-                color="#c5a46d"
+                color="#503e36"
                 variant="tonal"
                 class="ver-btn"
               >
@@ -268,13 +268,11 @@ watch([itemsPerPage], () => {
 
 <style scoped lang="scss">
 .alojamento-section {
-  background: linear-gradient(180deg, #fffaf7 0%, #fff6f0 100%);
   color: #3e3e3e;
   text-align: center;
   .section-title {
-    font-family: "Playfair Display", serif;
     font-size: 2rem;
-    color: #c5a46d;
+    color: #503e36;
     letter-spacing: 1px;
   }
   .alojamento-wrap {

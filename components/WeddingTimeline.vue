@@ -35,7 +35,7 @@ import { ref, computed, onMounted, onBeforeUnmount, nextTick } from "vue";
 import { PhUsers, PhHeart, PhWine, PhForkKnife } from "@phosphor-icons/vue";
 
 const timeline = [
-  { label: "Receção", time: "14h30", icon: PhUsers },
+  { label: "Receção", time: "14h00", icon: PhUsers },
   { label: "Cerimónia", time: "15h00", icon: PhHeart },
   { label: "Cocktail", time: "16h30", icon: PhWine },
   { label: "Jantar", time: "20h00", icon: PhForkKnife },

@@ -11,7 +11,6 @@
         <WeddingTimeline />
         <Map />
         <Lodging />
-        <Image />
         <Footer />
       </v-container>
     </transition>

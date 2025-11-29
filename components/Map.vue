@@ -25,7 +25,6 @@
 </template>
 
 <script setup></script>
-
 <style scoped lang="scss">
 @use "sass:color";
 @use "@/assets/scss/_variables.scss" as vars;
@@ -57,7 +56,12 @@
   .info-col {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    align-items: center;
+
+    @media (min-width: 960px) {
+      align-items: flex-start;
+      text-align: left;
+    }
   }
 
   .address {
@@ -75,29 +79,22 @@
     margin-bottom: 0.5rem;
   }
 
-  .coordinates {
-    font-family: vars.$body-font-family;
-    font-size: 0.95rem;
-    color: #777;
-    margin-bottom: 2rem;
-  }
-
   .map-btn {
-    background-color: vars.$gold-color;
+    background-color: #503e36;
     color: vars.$white-color;
     font-family: vars.$heading-font-family;
     font-weight: 500;
-    padding: 0.75rem 2.5rem;
+    padding: 0.75rem 5rem;
     font-size: 1rem;
     letter-spacing: 0.5px;
     transition: all 0.3s ease;
+    margin-top: 1rem;
 
     &:hover {
       background-color: color.adjust(vars.$gold-color, $lightness: -15%);
     }
   }
 
-  /* RESPONSIVE */
   @media (max-width: 960px) {
     .map-image {
       height: 220px;

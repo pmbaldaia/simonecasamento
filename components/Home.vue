@@ -391,7 +391,7 @@ onUnmounted(() => {
   }
 
   .home-parallax-container .home-content .couple-names .name {
-    font-size: 1.6rem;
+    font-size: 2.5rem;
     letter-spacing: 0.12em;
   }
 

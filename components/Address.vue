@@ -1,10 +1,10 @@
 <template>
-  <v-container fluid class="map-section">
+  <v-container fluid class="map-section pb-0 pt-0">
     <v-row class="map-row" align="center" justify="center" no-gutters>
       <v-col cols="12" md="4" class="info-col text-center">
-        <p class="address">Aqueduto Eventos</p>
-        <p class="city">Travessa Alto das Póvoas 96</p>
-        <p class="city">Póvoa de Varzim</p>
+        <p class="address">Cerimónia</p>
+        <p class="address">de Casamento</p>
+        <p class="city">Sábado, 11 de julho de 2026</p>
       </v-col>
 
       <v-col cols="12" md="6" class="image-col">
@@ -18,16 +18,12 @@
   </v-container>
 </template>
 
-<script setup>
-// Sem JS — todo o comportamento é controlado por CSS
-</script>
-
 <style scoped lang="scss">
 @use "@/assets/scss/_variables.scss" as vars;
 
 .map-section {
   background-color: vars.$offwhite-color;
-  padding-inline: 1.5rem;
+  padding-inline: 0;
 
   .map-row {
     max-width: 1100px;
@@ -39,18 +35,20 @@
   .image-col {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
   }
 
   .map-image {
     width: 100%;
     min-height: 360px;
-    border-radius: 16px;
-    background-image: url("@/assets/images/1U9A9619.JPG");
+    margin-left: calc(
+      50% - 50vw
+    ); // força a imagem a ocupar o viewport completo
+    margin-right: 0;
+    /*  background-image: url("@/assets/images/1U9A9619.JPG"); */
+    background-image: url("@/assets/images/1U9A9624.JPG");
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
-    /* Sem transform/anim — estática */
   }
 
   .info-col {
@@ -96,7 +94,7 @@
     }
 
     .info-col {
-      padding: 0.75rem 1rem;
+      padding: 4.75rem 1rem;
       text-align: center;
     }
   }
