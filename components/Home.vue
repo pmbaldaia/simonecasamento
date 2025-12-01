@@ -5,14 +5,24 @@
       :style="{ transform: parallaxTransform }"
       aria-hidden="true"
     >
-      <img src="@/assets/images/1U9A9605.JPG" alt="Simone & João" />
+      <img src="@/assets/images/1U9A9605.webp" alt="Simone & João" />
       <div class="overlay"></div>
     </div>
 
     <div class="home-content">
       <div class="banner-wrapper">
         <h1 class="couple-names">
-          <span class="name">Simone &</span>
+          <span class="name">
+            Simone
+            <img
+              class="name-amp"
+              src="@/assets/images/&.webp"
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              decoding="async"
+            />
+          </span>
           <span class="name">João Pedro</span>
         </h1>
       </div>
@@ -53,7 +63,7 @@
         <div class="progress" :style="{ width: progress + '%' }"></div>
       </div>
 
-      <audio ref="audio" src="/audio/ordinary.mp3"></audio>
+      <audio ref="audio" src="/audio/ordinary.mp3" preload="metadata"></audio>
     </div>
   </div>
 </template>
@@ -311,10 +321,18 @@ onUnmounted(() => {
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.16em;
-    /* color: $copper-solid; */
-    color: #924714;
+    color: #B8866A;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  .couple-names .name .name-amp {
+    display: inline-block;
+    height: 1em;
+    width: auto;
+    vertical-align: -0.18em;
+    object-fit: contain;
+    pointer-events: none;
   }
 
   .scroll-gif-container {
@@ -401,6 +419,11 @@ onUnmounted(() => {
 
   .home-parallax-container .home-content .intro-bottom .intro-text {
     font-size: clamp(1.05rem, 4.5vw, 1.4rem);
+  }
+
+  .home-parallax-container .home-content .couple-names .name .name-amp {
+    height: 1em;
+    vertical-align: -0.18em;
   }
 
   .scroll-gif-container {

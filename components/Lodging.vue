@@ -62,8 +62,8 @@ import {
 
 const alojamentos = [
   {
-    nome: "Hotel Axis Vermar Conference & Beach Hotel",
-    link: "https://www.axishoteis.com/axis-vermar.html",
+    nome: "Hotel Costa Verde",
+    link: "https://maps.app.goo.gl/dghVYAbFsAAxSUW59",
   },
   {
     nome: "Grande Hotel da Póvoa",
@@ -327,7 +327,7 @@ watch([itemsPerPage], () => {
       margin-top: auto;
       align-self: center;
       &:hover {
-        background-color: #c5a46d !important;
+        background-color: #3e3e3e !important;
         color: #fff !important;
       }
     }
@@ -380,7 +380,7 @@ watch([itemsPerPage], () => {
     transition: background 0.18s ease;
   }
   .dot.active {
-    background: rgba(197, 164, 109, 0.95);
+    background: #3e3e3e;
   }
 }
 </style>

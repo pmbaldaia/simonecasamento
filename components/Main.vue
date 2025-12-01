@@ -21,7 +21,7 @@
       @click="scrollToTop"
       aria-label="Back to top"
     >
-      <img alt="Aqueduto" src="@/assets/images/nome_siglas.png" />
+      <img alt="Aqueduto" src="@/assets/images/nome_siglas.webp" />
     </button>
   </div>
 </template>
@@ -33,7 +33,7 @@ import WeddingTimeline from "~/components/WeddingTimeline.vue";
 import Map from "@/components/Map.vue";
 import Footer from "@/components/Footer.vue";
 import Lodging from "./Lodging.vue";
-import logoImg from "@/assets/images/logo-quinta.png";
+import logoImg from "@/assets/images/logo-quinta.webp";
 
 const showBackToTop = ref(false);
 
@@ -101,7 +101,7 @@ onUnmounted(() => {
   padding: 0;
   border: none;
   border-radius: 8px;
-  background: $gold-color;
+  background: #503e36;
   color: $white-color;
   cursor: pointer;
   display: flex;
@@ -115,6 +115,7 @@ onUnmounted(() => {
     width: 24px;
     height: auto;
     display: block;
+    filter: brightness(0) invert(1);
   }
 
   .up-arrow {

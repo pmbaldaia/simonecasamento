@@ -127,7 +127,7 @@ onBeforeUnmount(() => {
 }
 
 .timeline-section {
-  background: vars.$copper-dark;
+  background: #503e36;
   text-align: center;
   color: vars.$white-color;
   padding: 2rem 0;

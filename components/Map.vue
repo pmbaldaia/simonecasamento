@@ -47,7 +47,7 @@
   .map-image {
     width: 100%;
     height: 200px;
-    background-image: url("../assets/images/Desenho.png");
+    background-image: url("../assets/images/Desenho.webp");
     background-size: contain;
     background-position: center;
     border-radius: 16px;

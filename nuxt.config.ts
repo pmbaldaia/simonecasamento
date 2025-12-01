@@ -23,7 +23,7 @@ export default defineNuxtConfig({
         {
           property: "og:image",
           content:
-            "https://example.com/imagens/simone-e-incognita-casamento.jpg",
+            "https://example.com/imagens/simone-e-incognita-casamento.webp",
         },
       ],
       link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
@@ -66,7 +66,7 @@ export default defineNuxtConfig({
     transpile: ["vuetify"],
   },
 
-  pwa: {
+ /*  pwa: {
     manifest: {
       name: "Casamento de Simone & João",
       short_name: "Simone & João",
@@ -74,5 +74,5 @@ export default defineNuxtConfig({
       background_color: "#fffdf8",
       theme_color: "#d4af37",
     },
-  },
+  }, */
 });
