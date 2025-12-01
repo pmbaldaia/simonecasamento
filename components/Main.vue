@@ -10,6 +10,7 @@
         <Address />
         <WeddingTimeline />
         <Map />
+        <Image />
         <Lodging />
         <Footer />
       </v-container>
@@ -31,6 +32,7 @@ import { ref, onMounted, onUnmounted } from "vue";
 import Home from "@/components/Home.vue";
 import WeddingTimeline from "~/components/WeddingTimeline.vue";
 import Map from "@/components/Map.vue";
+import Image from "@/components/Image.vue"
 import Footer from "@/components/Footer.vue";
 import Lodging from "./Lodging.vue";
 import logoImg from "@/assets/images/logo-quinta.webp";

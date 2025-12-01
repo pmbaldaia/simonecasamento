@@ -69,7 +69,16 @@
     padding-inline: 0;
 
     .map-row {
-      gap: 0.75rem;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .info-col {
+      padding: 2.75rem 1rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .map-image {
@@ -79,11 +88,6 @@
       margin-right: calc(50% - 50vw);
       border-radius: 0;
       box-shadow: none;
-    }
-
-    .info-col {
-      padding: 2.75rem 1rem;
-      text-align: center;
     }
   }
 

@@ -5,7 +5,6 @@
       :style="{ transform: parallaxTransform }"
       aria-hidden="true"
     >
-      <!-- Vídeo em vez da imagem -->
       <video
         ref="video"
         class="bg-video"
@@ -378,7 +377,6 @@ onUnmounted(() => {
     align-items: center;
     margin: 0;
     line-height: 1;
-    transform: translateY(-80%);
     transition: transform 0.22s ease;
   }
 
@@ -442,7 +440,7 @@ onUnmounted(() => {
   }
 
   .home-parallax-container .home-content .couple-names {
-    transform: translateY(-150%) !important;
+    transform: translateY(-90%) !important;
   }
 
   .music-player {
