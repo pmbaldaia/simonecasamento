@@ -267,6 +267,8 @@ watch([itemsPerPage], () => {
 </script>
 
 <style scoped lang="scss">
+@use "@/assets/scss/_variables.scss" as vars;
+
 .alojamento-section {
   color: #3e3e3e;
   text-align: center;
@@ -312,14 +314,16 @@ watch([itemsPerPage], () => {
       border: 1px solid #503e36;
     }
     .hotel-nome {
-      font-family: "Playfair Display", serif;
+      font-family: vars.$heading-font-family;
       font-size: 1.4rem;
       margin-bottom: 0.5rem;
       color: #3e3e3e;
+      font-weight: bold;
     }
     .ver-btn {
       text-transform: none;
       font-weight: 500;
+      font-family: vars.$heading-font-family;
       border-radius: 9999px;
       padding: 0.5rem 1.25rem;
       transition: all 0.3s ease;
