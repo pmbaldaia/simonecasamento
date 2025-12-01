@@ -5,21 +5,7 @@
       :style="{ transform: parallaxTransform }"
       aria-hidden="true"
     >
-      <!-- Vídeo em vez da imagem -->
-      <video
-        ref="video"
-        class="bg-video"
-        :src="videoSrc"
-        :poster="posterSrc"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="metadata"
-        tabindex="-1"
-        aria-hidden="true"
-      ></video>
-
+      <img src="@/assets/images/1U9A9605.webp" alt="Simone & João" />
       <div class="overlay"></div>
     </div>
 
@@ -83,11 +69,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed, watch } from "vue";
+import { ref, onMounted, onUnmounted, computed } from "vue";
 import { useDisplay } from "vuetify";
-
-import videoSrc from "../assets/videos/4.mp4"
-import posterSrc from "../assets/images/1U9A9605.webp";
 
 const scrollY = ref(0);
 const isScrolled = ref(false);
@@ -108,7 +91,7 @@ const parallaxTransform = computed(() => {
 let ticking = false;
 let mq = null;
 let audioEl = null;
-const video = ref(null); // ref para o elemento de vídeo
+let onMqChange = null;
 
 function handleScroll() {
   if (!ticking) {
@@ -133,21 +116,18 @@ function togglePlay() {
 }
 
 onMounted(() => {
-  // detectar prefers-reduced-motion e ouvir mudanças
   mq = window.matchMedia("(prefers-reduced-motion: reduce)");
   prefersReducedMotion.value = mq.matches;
-  const onMqChange = (e) => (prefersReducedMotion.value = e.matches);
+  onMqChange = (e) => (prefersReducedMotion.value = e.matches);
   if (mq.addEventListener) {
     mq.addEventListener("change", onMqChange);
   } else if (mq.addListener) {
     mq.addListener(onMqChange);
   }
 
-  // scroll
   window.addEventListener("scroll", handleScroll, { passive: true });
   handleScroll();
 
-  // audio setup
   audioEl = audio.value;
   if (audioEl) {
     const onPlay = () => (isPlaying.value = true);
@@ -162,48 +142,6 @@ onMounted(() => {
     audioEl.__onPause = onPause;
     audioEl.__onTime = onTime;
   }
-
-  // vídeo setup
-  const videoEl = video.value;
-  if (videoEl) {
-    // se o utilizador prefere menos movimento, não deixar o vídeo a tocar automaticamente
-    if (prefersReducedMotion.value) {
-      // mostra poster e garante que o vídeo não corre
-      try {
-        videoEl.pause();
-      } catch (e) {
-        // ignora
-      }
-      // remove autoplay (atributo html mantido, mas garantir que está pausado)
-    } else {
-      // tenta reproduzir o vídeo automaticamente (se permitido pelo browser)
-      // está muted por isso normalmente os browsers permitem autoplay
-      const tryPlay = async () => {
-        try {
-          await videoEl.play();
-        } catch (e) {
-          // autoplay bloqueado — não é crítico
-        }
-      };
-      tryPlay();
-    }
-
-    // guarda handlers caso queiras limpar depois (não há handlers extra por agora)
-  }
-
-  // reagir a mudanças de prefersReducedMotion em runtime
-  watch(prefersReducedMotion, (val) => {
-    const v = video.value;
-    if (!v) return;
-    if (val) {
-      try {
-        v.pause();
-      } catch (e) {}
-    } else {
-      const p = v.play();
-      if (p && p.catch) p.catch(() => {});
-    }
-  });
 });
 
 onUnmounted(() => {
@@ -211,12 +149,9 @@ onUnmounted(() => {
 
   if (mq) {
     if (mq.removeEventListener) {
-      mq.removeEventListener(
-        "change",
-        (e) => (prefersReducedMotion.value = e.matches)
-      );
+      mq.removeEventListener("change", onMqChange);
     } else if (mq.removeListener) {
-      mq.removeListener((e) => (prefersReducedMotion.value = e.matches));
+      mq.removeListener(onMqChange);
     }
   }
 
@@ -307,15 +242,13 @@ onUnmounted(() => {
     z-index: 1;
   }
 
-  /* Estilo para o vídeo de background */
-  .parallax-background :deep(.bg-video),
+  .parallax-background :deep(img),
   .parallax-background :deep(.v-img__img) {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: 70% 50%;
     filter: saturate(0.95) contrast(0.95);
-    display: block;
   }
 
   .parallax-background .overlay {
@@ -388,7 +321,7 @@ onUnmounted(() => {
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.16em;
-    color: #b8866a;
+    color: #B8866A;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -433,10 +366,8 @@ onUnmounted(() => {
 }
 
 @media (max-width: 480px) {
-  .home-parallax-container.parallax-mobile
-    .parallax-background
-    :deep(.bg-video),
-  .home-parallax-container .parallax-background :deep(.bg-video),
+  .home-parallax-container.parallax-mobile .parallax-background :deep(img),
+  .home-parallax-container .parallax-background :deep(img),
   .home-parallax-container .parallax-background :deep(.v-img__img) {
     object-position: 56% 50% !important;
   }

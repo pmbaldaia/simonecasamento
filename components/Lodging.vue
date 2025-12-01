@@ -308,9 +308,8 @@ watch([itemsPerPage], () => {
     display: flex;
     flex-direction: column;
     &:hover {
-      transform: translateY(-6px);
       box-shadow: 0 10px 28px rgba(197, 164, 109, 0.25);
-      background: linear-gradient(180deg, #fffdfb 0%, #fff7f0 100%);
+      border: 1px solid #503e36;
     }
     .hotel-nome {
       font-family: "Playfair Display", serif;
@@ -327,8 +326,8 @@ watch([itemsPerPage], () => {
       margin-top: auto;
       align-self: center;
       &:hover {
-        background-color: #3e3e3e !important;
-        color: #fff !important;
+        box-shadow: 0 10px 28px rgba(197, 164, 109, 0.25);
+        border: 1px solid #503e36;
       }
     }
   }
