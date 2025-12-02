@@ -62,7 +62,6 @@ import {
   watch,
 } from "vue";
 
-/* ---------- dados ---------- */
 const alojamentos = [
   {
     nome: "Hotel Costa Verde",
@@ -83,7 +82,6 @@ const itemsPerPage = ref(1);
 const activeIndex = ref(0);
 const translateX = ref(0);
 
-/* ---------- dragging / swipe state ---------- */
 let isPointerDown = false;
 let pointerId = null;
 let startX = 0;
@@ -93,12 +91,10 @@ let velocity = 0;
 let dragDistance = 0;
 let preventClick = false;
 
-/* thresholds (ajustáveis) ---------- */
-const VELOCITY_THRESHOLD = 0.45; // px/ms (se rápida, muda slide)
-const DISTANCE_THRESHOLD = 60; // px (se arrastas mais que isto, muda slide)
-const OVERSCROLL = 60; // permite arrastar um pouco além dos limites
+const VELOCITY_THRESHOLD = 0.45;
+const DISTANCE_THRESHOLD = 60;
+const OVERSCROLL = 60;
 
-/* ---------- computeds ---------- */
 const pageCount = computed(() =>
   Math.max(1, Math.ceil(alojamentos.length / itemsPerPage.value))
 );
@@ -109,7 +105,6 @@ const activePage = computed(() =>
   Math.floor(activeIndex.value / itemsPerPage.value)
 );
 
-/* ---------- util ---------- */
 function clamp(val, min, max) {
   return Math.min(Math.max(val, min), max);
 }
@@ -118,7 +113,6 @@ function setCardRef(el, idx) {
   cardRefs.value[idx] = el;
 }
 
-/* ---------- bounds + positioning ---------- */
 function calcBounds() {
   const wrap = alojamentoWrap.value;
   const el = alojamentoEl.value;
@@ -154,8 +148,8 @@ function updateTranslateForIndex(index, smooth = true) {
   const paddingLeft = parseFloat(style.paddingLeft || 0);
   const wrapW = wrap.clientWidth;
   const listW = el.scrollWidth;
-  let target;
 
+  let target;
   if (listW <= wrapW) {
     target = (wrapW - listW) / 2;
   } else {
@@ -166,7 +160,6 @@ function updateTranslateForIndex(index, smooth = true) {
 
   if (smooth) {
     el.style.transition = "transform 320ms cubic-bezier(.22,.9,.36,1)";
-    // forçar reflow para que a transição funcione
     void el.offsetWidth;
     translateX.value = target;
     setTimeout(() => {
@@ -177,11 +170,11 @@ function updateTranslateForIndex(index, smooth = true) {
   }
 }
 
-/* determina cartão mais próximo ao centro visível */
 function updateActiveIndexByTranslate() {
   const wrap = alojamentoWrap.value;
   const cards = cardRefs.value.filter(Boolean);
   if (!wrap || !cards.length) return;
+
   const style = getComputedStyle(wrap);
   const paddingLeft = parseFloat(style.paddingLeft || 0);
   const visibleLeft = -translateX.value + paddingLeft;
@@ -189,6 +182,7 @@ function updateActiveIndexByTranslate() {
 
   let closest = 0;
   let minDist = Infinity;
+
   cards.forEach((el, idx) => {
     const elCenter = el.offsetLeft + el.offsetWidth / 2;
     const dist = Math.abs(elCenter - visibleCenter);
@@ -197,10 +191,10 @@ function updateActiveIndexByTranslate() {
       closest = idx;
     }
   });
+
   activeIndex.value = closest;
 }
 
-/* ---------- scrolling API ---------- */
 function scrollTo(index) {
   index = clamp(index, 0, alojamentos.length - 1);
   activeIndex.value = index;
@@ -216,11 +210,9 @@ function scrollToPage(page) {
   scrollTo(targetIndex);
 }
 
-/* ---------- responsive / inicialização ---------- */
 function checkMobile() {
   isMobile.value = window.innerWidth <= 768;
   itemsPerPage.value = isMobile.value ? 2 : 1;
-  // se preferires calcular itemsPerPage por largura do cartão, podes substituir aqui
 }
 
 const resizeHandler = () => {
@@ -239,9 +231,7 @@ onBeforeUnmount(() => {
   window.removeEventListener("resize", resizeHandler);
 });
 
-/* ---------- pointer handlers (unifica touch + mouse) ---------- */
 function onPointerDown(e) {
-  // apenas botões primários / pointer tipo touch/pen/mouse primário
   if (e.button && e.button !== 0) return;
   isPointerDown = true;
   pointerId = e.pointerId;
@@ -255,7 +245,7 @@ function onPointerDown(e) {
   const el = alojamentoEl.value;
   if (el) {
     el.setPointerCapture(pointerId);
-    el.style.transition = ""; // cancela animação para drag
+    el.style.transition = "";
   }
 
   window.addEventListener("pointermove", onPointerMove);
@@ -265,15 +255,18 @@ function onPointerDown(e) {
 
 function onPointerMove(e) {
   if (!isPointerDown || e.pointerId !== pointerId) return;
+
   const x = e.clientX;
   const now = performance.now();
   const dt = now - lastTime || 1;
   const dx = x - lastX;
-  velocity = dx / dt; // px per ms
+  velocity = dx / dt;
+
   lastX = x;
   lastTime = now;
 
   dragDistance = x - startX;
+
   translateX.value += dx;
 
   const { min, max } = calcBounds();
@@ -283,7 +276,6 @@ function onPointerMove(e) {
     max + OVERSCROLL
   );
 
-  // se arrastaste um pouco, evita que clicks nos botões seçam executados
   if (Math.abs(dragDistance) > 8) {
     preventClick = true;
   }
@@ -291,54 +283,45 @@ function onPointerMove(e) {
 
 function onPointerUp(e) {
   if (!isPointerDown || e.pointerId !== pointerId) return;
+
   isPointerDown = false;
   const el = alojamentoEl.value;
   if (el) {
     try {
       el.releasePointerCapture(pointerId);
-    } catch (err) {}
+    } catch {}
   }
 
   window.removeEventListener("pointermove", onPointerMove);
   window.removeEventListener("pointerup", onPointerUp);
   window.removeEventListener("pointercancel", onPointerUp);
 
-  // decidir se muda slide com base em velocidade ou distância
   const absVelocity = Math.abs(velocity);
   const absDrag = Math.abs(dragDistance);
-  const direction = dragDistance < 0 ? 1 : -1; // se negativo, moveste para a esquerda -> avançar
+  const direction = dragDistance < 0 ? 1 : -1;
 
-  // primeiro encontra o index actual aproximado
   updateActiveIndexByTranslate();
   let targetIndex = activeIndex.value;
 
   if (absVelocity > VELOCITY_THRESHOLD) {
-    // swipe rápido => muda um ou mais slides dependendo da velocidade
-    const step = Math.min(2, Math.round(absVelocity / VELOCITY_THRESHOLD)); // max 2 passos
+    const step = Math.min(2, Math.round(absVelocity / VELOCITY_THRESHOLD));
     targetIndex = clamp(
       targetIndex + step * direction,
       0,
       alojamentos.length - 1
     );
   } else if (absDrag > DISTANCE_THRESHOLD) {
-    // arraste forte => muda 1 slide
     targetIndex = clamp(targetIndex + 1 * direction, 0, alojamentos.length - 1);
-  } else {
-    // pequeno arraste -> volta ao mais próximo
-    targetIndex = activeIndex.value;
   }
 
-  // actualizar e animar
   updateTranslateForIndex(targetIndex, true);
   activeIndex.value = targetIndex;
 
-  // pequeno timeout para evitar triggers de click logo a seguir a um drag
   setTimeout(() => {
     preventClick = false;
   }, 250);
 }
 
-/* evita abrir link quando foi um drag */
 function onCardClick(evt) {
   if (preventClick) {
     evt.stopPropagation();
@@ -346,22 +329,20 @@ function onCardClick(evt) {
   }
 }
 
-/* se a lista/numero de cartões mudar, actualiza */
 watch([() => alojamentos.length, itemsPerPage], () => {
   nextTick(() => {
-    // limpa refs ausentes
     cardRefs.value = cardRefs.value.slice(0, alojamentos.length);
     updateTranslateForIndex(activeIndex.value, false);
   });
 });
 </script>
-
 <style scoped lang="scss">
 @use "@/assets/scss/_variables.scss" as vars;
 
 .alojamento-section {
   color: #3e3e3e;
   text-align: center;
+
   .alojamento-wrap {
     padding-bottom: 1rem;
     overflow: hidden;
@@ -370,6 +351,7 @@ watch([() => alojamentos.length, itemsPerPage], () => {
     padding-left: 1rem;
     padding-right: 1rem;
   }
+
   .alojamento-list {
     display: flex;
     flex-wrap: nowrap;
@@ -378,11 +360,11 @@ watch([() => alojamentos.length, itemsPerPage], () => {
     gap: 2rem;
     min-width: max-content;
     padding: 0;
-    /* deixamos transição controlada por JS ao animar para um índice */
     will-change: transform;
     user-select: none;
     cursor: grab;
   }
+
   .alojamento-card {
     background: #ffffff;
     border: 1px solid rgba(197, 164, 109, 0.25);
@@ -390,15 +372,23 @@ watch([() => alojamentos.length, itemsPerPage], () => {
     padding: 2rem 1.75rem;
     min-width: 260px;
     width: 260px;
-    box-shadow: 0 6px 18px rgba(197, 164, 109, 0.15);
+
+    /* REMOVIDO o box-shadow dourado */
+    box-shadow: none;
+
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
-    touch-action: pan-y; /* permite vertical scroll na página enquanto impede gestures horizontais nativas */
+    touch-action: pan-y;
+
     &:hover {
-      box-shadow: 0 10px 28px rgba(197, 164, 109, 0.25);
+      /* REMOVIDO o box-shadow dourado do hover */
+      box-shadow: none;
+
+      /* manteve-se apenas o castanho */
       border: 1px solid #503e36;
     }
+
     .hotel-nome {
       font-family: vars.$heading-font-family;
       font-size: 1.4rem;
@@ -406,6 +396,7 @@ watch([() => alojamentos.length, itemsPerPage], () => {
       color: #3e3e3e;
       font-weight: bold;
     }
+
     .ver-btn {
       text-transform: none;
       font-weight: 500;
@@ -415,47 +406,60 @@ watch([() => alojamentos.length, itemsPerPage], () => {
       transition: all 0.3s ease;
       margin-top: auto;
       align-self: center;
+
       &:hover {
-        box-shadow: 0 10px 28px rgba(197, 164, 109, 0.25);
+        /* REMOVIDO box-shadow dourado */
+        box-shadow: none;
+
+        /* manteve-se o castanho */
         border: 1px solid #503e36;
       }
     }
   }
+
   @media (max-width: 960px) {
     .alojamento-list {
       gap: 1.5rem;
     }
+
     .alojamento-card {
       width: 220px;
       min-width: 220px;
       padding: 1.75rem 1.25rem;
+
       .hotel-nome {
         font-size: 1.2rem;
       }
     }
   }
+
   @media (max-width: 768px) {
     .alojamento-list {
       justify-content: flex-start !important;
     }
+
     .alojamento-card {
       width: 200px;
       min-width: 200px;
       padding: 1.5rem 1rem;
+
       .hotel-nome {
         font-size: 1.1rem;
       }
+
       .ver-btn {
         font-size: 0.85rem;
       }
     }
   }
+
   .pagination {
     display: flex;
     justify-content: center;
     gap: 0.6rem;
     margin-top: 1rem;
   }
+
   .dot {
     width: 32px;
     height: 1px;
@@ -468,6 +472,7 @@ watch([() => alojamentos.length, itemsPerPage], () => {
     cursor: pointer;
     transition: background 0.18s ease;
   }
+
   .dot.active {
     background: #3e3e3e;
   }
