@@ -12,16 +12,14 @@
 
     <div class="fog-bar" role="region" aria-label="Confirmação">
       <div class="fog" />
-      <div
-        id="footer-text"
-        class="image-text"
-        style="font-family: serif; font-size: 0.9rem; font-style: italic"
-      >
-        <p class="line line--lead">
+      <div id="footer-text" class="image-text">
+        <p class="line line--lead section-subtitle">
           Agradecemos a confirmação até <strong>31 de março de 2026</strong>
         </p>
 
-        <p>Simone – 936 691 881 | João Pedro – 961 748 963</p>
+        <p class="section-subtitle">
+          Simone – 936 691 881 | João Pedro – 961 748 963
+        </p>
       </div>
     </div>
   </v-container>
@@ -30,6 +28,8 @@
 <script setup></script>
 
 <style lang="scss" scoped>
+@use "@/assets/scss/_variables.scss" as vars;
+
 $bg: #f9f6f2;
 
 .footer {
@@ -68,14 +68,6 @@ $bg: #f9f6f2;
       height: 40%;
       z-index: 1;
       pointer-events: none;
-      background: linear-gradient(
-        to bottom,
-        rgba(249, 246, 242, 0.95) 0%,
-        rgba(249, 246, 242, 0.75) 30%,
-        rgba(249, 246, 242, 0.45) 60%,
-        rgba(249, 246, 242, 0) 100%
-      );
-      filter: blur(18px);
       mix-blend-mode: normal;
     }
   }
@@ -96,14 +88,6 @@ $bg: #f9f6f2;
     inset: 0;
     z-index: 2;
     pointer-events: none;
-    background: radial-gradient(
-      circle at center,
-      rgba(255, 255, 255, 0.9) 0%,
-      rgba(255, 255, 255, 0.7) 30%,
-      rgba(255, 255, 255, 0.45) 60%,
-      rgba(255, 255, 255, 0) 100%
-    );
-    filter: blur(34px);
   }
 
   .image-text {
@@ -112,6 +96,13 @@ $bg: #f9f6f2;
     max-width: 880px;
     padding: 0 1rem;
     color: #2b2b2b;
+    font-family: vars.$body-font-family;
+    font-style: italic;
+    font-size: 0.9rem;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-variant-numeric: lining-nums;
+    font-feature-settings: "lnum" 1, "pnum" 1;
 
     .line--lead {
       margin: 0 0 0.6rem 0;
@@ -122,6 +113,24 @@ $bg: #f9f6f2;
     p {
       margin: 0.2rem 0;
     }
+
+    strong {
+      font-weight: 700;
+      font-style: normal;
+      font-variant-numeric: lining-nums;
+      font-feature-settings: "lnum" 1, "pnum" 1;
+    }
+  }
+
+  .section-subtitle {
+    font-family: vars.$body-font-family;
+    font-size: 1.4rem;
+    font-style: italic;
+    text-align: center;
+    color: vars.$muted-gray;
+    font-variant-numeric: lining-nums;
+    font-feature-settings: "lnum" 1, "pnum" 1;
+    margin: 0;
   }
 
   @media screen and (max-width: 767px) {
@@ -129,13 +138,13 @@ $bg: #f9f6f2;
 
     .footer-image {
       img {
-        object-position: center 45%;
-        transform: scale(1.08);
+        object-position: center 48%;
+        transform: scale(1.03);
       }
 
       .image-top-fade {
-        height: 60%;
-        filter: blur(24px);
+        height: 45%;
+        filter: blur(16px);
       }
     }
 
@@ -150,6 +159,10 @@ $bg: #f9f6f2;
       .line--lead {
         font-size: 0.85rem !important;
       }
+    }
+
+    .section-subtitle {
+      font-size: 0.9rem;
     }
   }
 }

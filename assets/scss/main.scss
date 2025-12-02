@@ -17,10 +17,19 @@ body {
   margin: 2rem 0;
   font-size: 3rem;
   text-align: center;
-  color: vars.$gold-color;
-  font-family: vars.$heading-font-family;
+  color: #503e36;
+  font-size: 2rem;
   letter-spacing: 1px;
+  font-family: vars.$heading-font-family;
   text-transform: uppercase;
+}
+
+.section-subtitle {
+  font-family: vars.$body-font-family;
+  font-size: 1.4rem;
+  font-style: italic;
+  text-align: center;
+  color: vars.$muted-gray;
 }
 
 a {
@@ -56,7 +65,11 @@ button {
 
 @media screen and (max-width: 767px) {
   .section-title {
-    font-size: 2.2rem;
+    font-size: 2rem;
     line-height: 2.8rem;
+  }
+
+  .section-subtitle {
+    font-size: 1.5rem;
   }
 }

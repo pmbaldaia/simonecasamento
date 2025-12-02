@@ -1,6 +1,6 @@
 <template>
   <div class="app-wrapper">
-    <div class="logo-ring">
+    <div class="logo-ring" :class="{ hidden: !showLogo }">
       <img :src="logoImg" alt="Logo Aqueduto" class="logo-img" />
     </div>
 
@@ -10,7 +10,7 @@
         <Address />
         <WeddingTimeline />
         <Map />
-        <Image />
+        <ImageComp />
         <Lodging />
         <Footer />
       </v-container>
@@ -30,20 +30,23 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
 import Home from "@/components/Home.vue";
-import WeddingTimeline from "~/components/WeddingTimeline.vue";
+import Address from "@/components/Address.vue";
+import WeddingTimeline from "@/components/WeddingTimeline.vue";
 import Map from "@/components/Map.vue";
-import Image from "@/components/Image.vue"
+import ImageComp from "@/components/Image.vue";
 import Footer from "@/components/Footer.vue";
-import Lodging from "./Lodging.vue";
+import Lodging from "@/components/Lodging.vue";
 import logoImg from "@/assets/images/logo-quinta.webp";
 
 const showBackToTop = ref(false);
+const showLogo = ref(true);
 
 function handleScroll() {
-  const scrollTop = window.scrollY;
+  const scrollTop = window.scrollY || window.pageYOffset;
   const windowHeight = window.innerHeight;
   const fullHeight = document.documentElement.scrollHeight;
   showBackToTop.value = scrollTop + windowHeight >= fullHeight - 50;
+  showLogo.value = scrollTop === 0;
 }
 
 function scrollToTop() {
@@ -51,6 +54,7 @@ function scrollToTop() {
 }
 
 onMounted(() => {
+  handleScroll();
   window.addEventListener("scroll", handleScroll);
 });
 
@@ -80,11 +84,20 @@ onUnmounted(() => {
   padding: 6px 12px;
   border-radius: 12px;
   backdrop-filter: blur(8px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  pointer-events: auto;
+
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-20px);
+  }
 
   .logo-img {
     width: 100px;
     height: auto;
     filter: brightness(0) invert(1);
+    display: block;
   }
 }
 

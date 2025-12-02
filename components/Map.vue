@@ -1,17 +1,20 @@
 <template>
   <v-container fluid class="map-section">
     <v-row class="map-row" align="center" justify="center">
-      <v-col cols="12" md="4" class="image-col">
+      <v-col cols="12" md="6" class="image-col">
         <div class="map-image"></div>
       </v-col>
 
-      <v-col cols="12" md="4" class="info-col text-center">
-        <p class="address">Aqueduto Eventos</p>
-        <p class="city">Travessa Alto das Póvoas 96</p>
-        <p class="city">Póvoa de Varzim</p>
+      <v-col cols="12" md="6" class="info-col text-center">
+        <h2 class="section-title map-title">Aqueduto Eventos</h2>
+        <p class="section-subtitle map-subtitle">
+          Travessa Alto das Póvoas 96
+          <br />
+          Póvoa de Varzim
+        </p>
 
         <v-btn
-          class="map-btn mt-2"
+          class="map-btn mt-2 mb-4"
           rounded="xl"
           size="large"
           href="https://maps.app.goo.gl/ysJ65kacnqPFDSra6"
@@ -64,19 +67,21 @@
     }
   }
 
-  .address {
-    font-family: vars.$heading-font-family;
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 0.5rem;
+  .map-title {
+    margin-bottom: 0.75rem;
+    text-align: center;
+
+    @media (min-width: 960px) {
+      text-align: left;
+    }
   }
 
-  .city {
-    font-family: vars.$body-font-family;
-    font-size: 1.1rem;
-    color: #555;
-    margin-bottom: 0.5rem;
+  .map-subtitle {
+    text-align: center;
+
+    @media (min-width: 960px) {
+      text-align: left;
+    }
   }
 
   .map-btn {

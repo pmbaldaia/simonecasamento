@@ -9,17 +9,19 @@
             ref="alojamentoEl"
             class="alojamento-list"
             :style="{ transform: `translateX(${translateX}px)` }"
-            @touchstart.passive="onTouchStart"
-            @touchmove.passive="onTouchMove"
-            @touchend.passive="onTouchEnd"
-            @mousedown.prevent="onMouseDown"
+            @pointerdown="onPointerDown"
+            @click.capture="onCardClick"
+            tabindex="0"
+            @keydown.left.prevent="scrollTo(activeIndex - 1)"
+            @keydown.right.prevent="scrollTo(activeIndex + 1)"
           >
             <div
               v-for="(hotel, index) in alojamentos"
               :key="index"
               class="alojamento-card"
-              :ref="(el) => (cardRefs[index] = el)"
+              :ref="(el) => setCardRef(el, index)"
               :data-index="index"
+              @pointerup.prevent
             >
               <p class="hotel-nome">{{ hotel.nome }}</p>
               <v-btn
@@ -60,6 +62,7 @@ import {
   watch,
 } from "vue";
 
+/* ---------- dados ---------- */
 const alojamentos = [
   {
     nome: "Hotel Costa Verde",
@@ -69,25 +72,33 @@ const alojamentos = [
     nome: "Grande Hotel da Póvoa",
     link: "https://www.grandehoteldapovoa.com/",
   },
-  {
-    nome: "Hotel Contriz",
-    link: "http://hotel-contriz.com.es/",
-  },
+  { nome: "Hotel Contriz", link: "http://hotel-contriz.com.es/" },
 ];
 
 const alojamentoWrap = ref(null);
 const alojamentoEl = ref(null);
-const cardRefs = [];
+const cardRefs = ref([]);
 const isMobile = ref(false);
 const itemsPerPage = ref(1);
 const activeIndex = ref(0);
 const translateX = ref(0);
 
+/* ---------- dragging / swipe state ---------- */
 let isPointerDown = false;
-let pointerStartX = 0;
-let pointerLastX = 0;
-let pointerDelta = 0;
+let pointerId = null;
+let startX = 0;
+let lastX = 0;
+let lastTime = 0;
+let velocity = 0;
+let dragDistance = 0;
+let preventClick = false;
 
+/* thresholds (ajustáveis) ---------- */
+const VELOCITY_THRESHOLD = 0.45; // px/ms (se rápida, muda slide)
+const DISTANCE_THRESHOLD = 60; // px (se arrastas mais que isto, muda slide)
+const OVERSCROLL = 60; // permite arrastar um pouco além dos limites
+
+/* ---------- computeds ---------- */
 const pageCount = computed(() =>
   Math.max(1, Math.ceil(alojamentos.length / itemsPerPage.value))
 );
@@ -98,27 +109,35 @@ const activePage = computed(() =>
   Math.floor(activeIndex.value / itemsPerPage.value)
 );
 
+/* ---------- util ---------- */
 function clamp(val, min, max) {
   return Math.min(Math.max(val, min), max);
 }
 
+function setCardRef(el, idx) {
+  cardRefs.value[idx] = el;
+}
+
+/* ---------- bounds + positioning ---------- */
 function calcBounds() {
   const wrap = alojamentoWrap.value;
   const el = alojamentoEl.value;
-  if (!wrap || !el) return { min: 0, max: 0 };
-  const cards = cardRefs.filter(Boolean);
-  if (!cards.length) return { min: 0, max: 0 };
-  const first = cards[0];
-  const last = cards[cards.length - 1];
+  const cards = cardRefs.value.filter(Boolean);
+  if (!wrap || !el || !cards.length) return { min: 0, max: 0 };
+
   const style = getComputedStyle(wrap);
   const paddingLeft = parseFloat(style.paddingLeft || 0);
   const paddingRight = parseFloat(style.paddingRight || 0);
   const wrapW = wrap.clientWidth;
   const listW = el.scrollWidth;
+
   if (listW <= wrapW) {
     const centerOffset = (wrapW - listW) / 2;
     return { min: centerOffset, max: centerOffset };
   }
+
+  const first = cards[0];
+  const last = cards[cards.length - 1];
   const max = paddingLeft - first.offsetLeft;
   const min = wrapW - paddingRight - (last.offsetLeft + last.offsetWidth);
   return { min, max };
@@ -127,13 +146,16 @@ function calcBounds() {
 function updateTranslateForIndex(index, smooth = true) {
   const wrap = alojamentoWrap.value;
   const el = alojamentoEl.value;
-  const card = cardRefs[index];
+  const cards = cardRefs.value;
+  const card = cards[index];
   if (!wrap || !el || !card) return;
+
   const style = getComputedStyle(wrap);
   const paddingLeft = parseFloat(style.paddingLeft || 0);
   const wrapW = wrap.clientWidth;
   const listW = el.scrollWidth;
   let target;
+
   if (listW <= wrapW) {
     target = (wrapW - listW) / 2;
   } else {
@@ -141,8 +163,10 @@ function updateTranslateForIndex(index, smooth = true) {
     const { min, max } = calcBounds();
     target = clamp(target, min, max);
   }
+
   if (smooth) {
     el.style.transition = "transform 320ms cubic-bezier(.22,.9,.36,1)";
+    // forçar reflow para que a transição funcione
     void el.offsetWidth;
     translateX.value = target;
     setTimeout(() => {
@@ -153,14 +177,16 @@ function updateTranslateForIndex(index, smooth = true) {
   }
 }
 
+/* determina cartão mais próximo ao centro visível */
 function updateActiveIndexByTranslate() {
   const wrap = alojamentoWrap.value;
-  const cards = cardRefs.filter(Boolean);
+  const cards = cardRefs.value.filter(Boolean);
   if (!wrap || !cards.length) return;
   const style = getComputedStyle(wrap);
   const paddingLeft = parseFloat(style.paddingLeft || 0);
   const visibleLeft = -translateX.value + paddingLeft;
   const visibleCenter = visibleLeft + wrap.clientWidth / 2;
+
   let closest = 0;
   let minDist = Infinity;
   cards.forEach((el, idx) => {
@@ -174,10 +200,11 @@ function updateActiveIndexByTranslate() {
   activeIndex.value = closest;
 }
 
+/* ---------- scrolling API ---------- */
 function scrollTo(index) {
   index = clamp(index, 0, alojamentos.length - 1);
-  updateTranslateForIndex(index, true);
   activeIndex.value = index;
+  updateTranslateForIndex(index, true);
 }
 
 function scrollToPage(page) {
@@ -189,12 +216,14 @@ function scrollToPage(page) {
   scrollTo(targetIndex);
 }
 
+/* ---------- responsive / inicialização ---------- */
 function checkMobile() {
   isMobile.value = window.innerWidth <= 768;
   itemsPerPage.value = isMobile.value ? 2 : 1;
+  // se preferires calcular itemsPerPage por largura do cartão, podes substituir aqui
 }
 
-let resizeHandler = () => {
+const resizeHandler = () => {
   checkMobile();
   nextTick(() => updateTranslateForIndex(activeIndex.value, false));
 };
@@ -210,59 +239,120 @@ onBeforeUnmount(() => {
   window.removeEventListener("resize", resizeHandler);
 });
 
-function onTouchStart(e) {
+/* ---------- pointer handlers (unifica touch + mouse) ---------- */
+function onPointerDown(e) {
+  // apenas botões primários / pointer tipo touch/pen/mouse primário
+  if (e.button && e.button !== 0) return;
   isPointerDown = true;
-  pointerStartX = e.touches ? e.touches[0].clientX : e.clientX;
-  pointerLastX = pointerStartX;
-  pointerDelta = 0;
-  if (alojamentoEl.value) alojamentoEl.value.style.transition = "";
+  pointerId = e.pointerId;
+  startX = e.clientX;
+  lastX = startX;
+  lastTime = performance.now();
+  velocity = 0;
+  dragDistance = 0;
+  preventClick = false;
+
+  const el = alojamentoEl.value;
+  if (el) {
+    el.setPointerCapture(pointerId);
+    el.style.transition = ""; // cancela animação para drag
+  }
+
+  window.addEventListener("pointermove", onPointerMove);
+  window.addEventListener("pointerup", onPointerUp);
+  window.addEventListener("pointercancel", onPointerUp);
 }
 
-function onTouchMove(e) {
-  if (!isPointerDown) return;
-  const x = e.touches ? e.touches[0].clientX : e.clientX;
-  pointerDelta = x - pointerLastX;
-  pointerLastX = x;
-  translateX.value += pointerDelta;
+function onPointerMove(e) {
+  if (!isPointerDown || e.pointerId !== pointerId) return;
+  const x = e.clientX;
+  const now = performance.now();
+  const dt = now - lastTime || 1;
+  const dx = x - lastX;
+  velocity = dx / dt; // px per ms
+  lastX = x;
+  lastTime = now;
+
+  dragDistance = x - startX;
+  translateX.value += dx;
+
   const { min, max } = calcBounds();
-  translateX.value = clamp(translateX.value, min - 60, max + 60);
+  translateX.value = clamp(
+    translateX.value,
+    min - OVERSCROLL,
+    max + OVERSCROLL
+  );
+
+  // se arrastaste um pouco, evita que clicks nos botões seçam executados
+  if (Math.abs(dragDistance) > 8) {
+    preventClick = true;
+  }
 }
 
-function onTouchEnd() {
-  if (!isPointerDown) return;
+function onPointerUp(e) {
+  if (!isPointerDown || e.pointerId !== pointerId) return;
   isPointerDown = false;
+  const el = alojamentoEl.value;
+  if (el) {
+    try {
+      el.releasePointerCapture(pointerId);
+    } catch (err) {}
+  }
+
+  window.removeEventListener("pointermove", onPointerMove);
+  window.removeEventListener("pointerup", onPointerUp);
+  window.removeEventListener("pointercancel", onPointerUp);
+
+  // decidir se muda slide com base em velocidade ou distância
+  const absVelocity = Math.abs(velocity);
+  const absDrag = Math.abs(dragDistance);
+  const direction = dragDistance < 0 ? 1 : -1; // se negativo, moveste para a esquerda -> avançar
+
+  // primeiro encontra o index actual aproximado
   updateActiveIndexByTranslate();
-  updateTranslateForIndex(activeIndex.value, true);
+  let targetIndex = activeIndex.value;
+
+  if (absVelocity > VELOCITY_THRESHOLD) {
+    // swipe rápido => muda um ou mais slides dependendo da velocidade
+    const step = Math.min(2, Math.round(absVelocity / VELOCITY_THRESHOLD)); // max 2 passos
+    targetIndex = clamp(
+      targetIndex + step * direction,
+      0,
+      alojamentos.length - 1
+    );
+  } else if (absDrag > DISTANCE_THRESHOLD) {
+    // arraste forte => muda 1 slide
+    targetIndex = clamp(targetIndex + 1 * direction, 0, alojamentos.length - 1);
+  } else {
+    // pequeno arraste -> volta ao mais próximo
+    targetIndex = activeIndex.value;
+  }
+
+  // actualizar e animar
+  updateTranslateForIndex(targetIndex, true);
+  activeIndex.value = targetIndex;
+
+  // pequeno timeout para evitar triggers de click logo a seguir a um drag
+  setTimeout(() => {
+    preventClick = false;
+  }, 250);
 }
 
-function onMouseDown(e) {
-  isPointerDown = true;
-  pointerStartX = e.clientX;
-  pointerLastX = pointerStartX;
-  pointerDelta = 0;
-  if (alojamentoEl.value) alojamentoEl.value.style.transition = "";
-  const onMouseMove = (moveEvent) => {
-    if (!isPointerDown) return;
-    const x = moveEvent.clientX;
-    pointerDelta = x - pointerLastX;
-    pointerLastX = x;
-    translateX.value += pointerDelta;
-    const { min, max } = calcBounds();
-    translateX.value = clamp(translateX.value, min - 60, max + 60);
-  };
-  const onMouseUp = () => {
-    isPointerDown = false;
-    updateActiveIndexByTranslate();
-    updateTranslateForIndex(activeIndex.value, true);
-    window.removeEventListener("mousemove", onMouseMove);
-    window.removeEventListener("mouseup", onMouseUp);
-  };
-  window.addEventListener("mousemove", onMouseMove);
-  window.addEventListener("mouseup", onMouseUp);
+/* evita abrir link quando foi um drag */
+function onCardClick(evt) {
+  if (preventClick) {
+    evt.stopPropagation();
+    evt.preventDefault();
+  }
 }
 
-watch([itemsPerPage], () => {
-  nextTick(() => updateTranslateForIndex(activeIndex.value, false));
+/* se a lista/numero de cartões mudar, actualiza */
+watch([() => alojamentos.length, itemsPerPage], () => {
+  nextTick(() => {
+    // limpa refs ausentes
+    cardRefs.value = cardRefs.value.slice(0, alojamentos.length);
+    updateTranslateForIndex(activeIndex.value, false);
+  });
 });
 </script>
 
@@ -272,11 +362,6 @@ watch([itemsPerPage], () => {
 .alojamento-section {
   color: #3e3e3e;
   text-align: center;
-  .section-title {
-    font-size: 2rem;
-    color: #503e36;
-    letter-spacing: 1px;
-  }
   .alojamento-wrap {
     padding-bottom: 1rem;
     overflow: hidden;
@@ -293,9 +378,10 @@ watch([itemsPerPage], () => {
     gap: 2rem;
     min-width: max-content;
     padding: 0;
-    transition: all 0.3s ease;
+    /* deixamos transição controlada por JS ao animar para um índice */
     will-change: transform;
     user-select: none;
+    cursor: grab;
   }
   .alojamento-card {
     background: #ffffff;
@@ -306,9 +392,9 @@ watch([itemsPerPage], () => {
     width: 260px;
     box-shadow: 0 6px 18px rgba(197, 164, 109, 0.15);
     transition: all 0.3s ease;
-    cursor: pointer;
     display: flex;
     flex-direction: column;
+    touch-action: pan-y; /* permite vertical scroll na página enquanto impede gestures horizontais nativas */
     &:hover {
       box-shadow: 0 10px 28px rgba(197, 164, 109, 0.25);
       border: 1px solid #503e36;

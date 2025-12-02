@@ -29,14 +29,21 @@
             Simone
             <img
               class="name-amp"
-              src="@/assets/images/&.webp"
+              src="@/assets/images/&2.webp"
               alt=""
               aria-hidden="true"
               loading="lazy"
               decoding="async"
             />
           </span>
-          <span class="name">João Pedro</span>
+          <span class="name"><img
+              class="name-amp"
+              src="@/assets/images/j.webp"
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              decoding="async"
+            />oão Pedro</span>
         </h1>
       </div>
 
@@ -231,6 +238,8 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
+@use "@/assets/scss/_variables.scss" as vars;
+
 .home-parallax-container {
   position: relative;
   min-height: 100vh;
@@ -270,6 +279,8 @@ onUnmounted(() => {
     min-width: 34px;
     padding: 0;
     border-radius: 50%;
+    background-color: #503e36;
+    color: vars.$white-color;
     transition: transform 0.18s ease;
   }
 
@@ -291,7 +302,7 @@ onUnmounted(() => {
 
   .music-player .progress-bar .progress {
     height: 100%;
-    background: #f1c40f;
+    background: #503e36;
     width: 0%;
     transition: width 0.18s linear;
   }
@@ -312,7 +323,7 @@ onUnmounted(() => {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 70% 50%;
+    object-position: 50% 60%;
     filter: saturate(0.95) contrast(0.95);
     display: block;
   }
@@ -371,7 +382,7 @@ onUnmounted(() => {
   }
 
   .couple-names {
-    font-family: "Cormorant", serif !important;
+    font-family: vars.$heading-font-family !important;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -382,11 +393,11 @@ onUnmounted(() => {
 
   .couple-names .name {
     display: block;
-    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    font-size: clamp(2.8rem, 6vw, 4.2rem);
     font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.16em;
-    color: #b8866a;
+    letter-spacing: 0.18em;
+    color: #503e36;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
