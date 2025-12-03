@@ -15,7 +15,7 @@ body {
 
 .section-title {
   margin: 2rem 0;
-  font-size: 3rem;
+  font-size: 2rem;
   text-align: center;
   color: #503e36;
   font-size: 2rem;
@@ -26,7 +26,7 @@ body {
 
 .section-subtitle {
   font-family: vars.$body-font-family;
-  font-size: 1.4rem;
+  font-size: 1.34rem;
   font-style: italic;
   text-align: center;
   color: vars.$muted-gray;
@@ -65,7 +65,7 @@ button {
 
 @media screen and (max-width: 767px) {
   .section-title {
-    font-size: 2rem;
+    font-size: 1.5rem;
     line-height: 2.8rem;
   }
 

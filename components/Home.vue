@@ -29,21 +29,23 @@
             Simone
             <img
               class="name-amp"
-              src="@/assets/images/&2.webp"
+              src="@/assets/images/&3.webp"
               alt=""
               aria-hidden="true"
               loading="lazy"
               decoding="async"
             />
           </span>
-          <span class="name"><img
+          <span class="name"
+            ><img
               class="name-amp"
-              src="@/assets/images/j.webp"
+              src="@/assets/images/j3.webp"
               alt=""
               aria-hidden="true"
               loading="lazy"
               decoding="async"
-            />oão Pedro</span>
+            />oão Pedro</span
+          >
         </h1>
       </div>
 
@@ -92,7 +94,7 @@
 import { ref, onMounted, onUnmounted, computed, watch } from "vue";
 import { useDisplay } from "vuetify";
 
-import videoSrc from "../assets/videos/4.mp4"
+import videoSrc from "../assets/videos/4.mp4";
 import posterSrc from "../assets/images/1U9A9605.webp";
 
 const scrollY = ref(0);
@@ -114,7 +116,7 @@ const parallaxTransform = computed(() => {
 let ticking = false;
 let mq = null;
 let audioEl = null;
-const video = ref(null); // ref para o elemento de vídeo
+const video = ref(null);
 
 function handleScroll() {
   if (!ticking) {
@@ -139,7 +141,6 @@ function togglePlay() {
 }
 
 onMounted(() => {
-  // detectar prefers-reduced-motion e ouvir mudanças
   mq = window.matchMedia("(prefers-reduced-motion: reduce)");
   prefersReducedMotion.value = mq.matches;
   const onMqChange = (e) => (prefersReducedMotion.value = e.matches);
@@ -149,11 +150,9 @@ onMounted(() => {
     mq.addListener(onMqChange);
   }
 
-  // scroll
   window.addEventListener("scroll", handleScroll, { passive: true });
   handleScroll();
 
-  // audio setup
   audioEl = audio.value;
   if (audioEl) {
     const onPlay = () => (isPlaying.value = true);
@@ -169,35 +168,22 @@ onMounted(() => {
     audioEl.__onTime = onTime;
   }
 
-  // vídeo setup
   const videoEl = video.value;
   if (videoEl) {
-    // se o utilizador prefere menos movimento, não deixar o vídeo a tocar automaticamente
     if (prefersReducedMotion.value) {
-      // mostra poster e garante que o vídeo não corre
       try {
         videoEl.pause();
-      } catch (e) {
-        // ignora
-      }
-      // remove autoplay (atributo html mantido, mas garantir que está pausado)
+      } catch (e) {}
     } else {
-      // tenta reproduzir o vídeo automaticamente (se permitido pelo browser)
-      // está muted por isso normalmente os browsers permitem autoplay
       const tryPlay = async () => {
         try {
           await videoEl.play();
-        } catch (e) {
-          // autoplay bloqueado — não é crítico
-        }
+        } catch (e) {}
       };
       tryPlay();
     }
-
-    // guarda handlers caso queiras limpar depois (não há handlers extra por agora)
   }
 
-  // reagir a mudanças de prefersReducedMotion em runtime
   watch(prefersReducedMotion, (val) => {
     const v = video.value;
     if (!v) return;
@@ -397,7 +383,7 @@ onUnmounted(() => {
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.18em;
-    color: #503e36;
+    color: #a88f82;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }

@@ -30,8 +30,6 @@
 <style lang="scss" scoped>
 @use "@/assets/scss/_variables.scss" as vars;
 
-$bg: #f9f6f2;
-
 .footer {
   position: relative;
   display: flex;
@@ -40,7 +38,6 @@ $bg: #f9f6f2;
   align-items: center;
   text-align: center;
   min-height: 70vh;
-  background-color: $bg;
   overflow: hidden;
   padding: 0;
 
@@ -49,7 +46,6 @@ $bg: #f9f6f2;
     inset: 0;
     pointer-events: none;
     z-index: 0;
-    opacity: 0.95;
 
     img {
       width: 100%;
@@ -68,7 +64,6 @@ $bg: #f9f6f2;
       height: 40%;
       z-index: 1;
       pointer-events: none;
-      mix-blend-mode: normal;
     }
   }
 
@@ -104,21 +99,24 @@ $bg: #f9f6f2;
     font-variant-numeric: lining-nums;
     font-feature-settings: "lnum" 1, "pnum" 1;
 
-    .line--lead {
-      margin: 0 0 0.6rem 0;
-      font-size: 1.05rem;
-      line-height: 1.3;
-    }
-
     p {
       margin: 0.2rem 0;
+      text-decoration: none !important;
     }
 
     strong {
       font-weight: 700;
       font-style: normal;
+      text-decoration: none !important;
       font-variant-numeric: lining-nums;
       font-feature-settings: "lnum" 1, "pnum" 1;
+    }
+
+    .line--lead {
+      margin: 0 0 0.6rem 0;
+      font-size: 1.05rem;
+      line-height: 1.3;
+      text-decoration: none !important;
     }
   }
 
@@ -131,6 +129,7 @@ $bg: #f9f6f2;
     font-variant-numeric: lining-nums;
     font-feature-settings: "lnum" 1, "pnum" 1;
     margin: 0;
+    text-decoration: none !important;
   }
 
   @media screen and (max-width: 767px) {

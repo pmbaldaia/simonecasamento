@@ -28,6 +28,7 @@
 </template>
 
 <script setup></script>
+
 <style scoped lang="scss">
 @use "sass:color";
 @use "@/assets/scss/_variables.scss" as vars;
@@ -49,21 +50,31 @@
 
   .map-image {
     width: 100%;
-    height: 200px;
+    height: 220px;
     background-image: url("../assets/images/Desenho.webp");
     background-size: contain;
     background-position: center;
     border-radius: 16px;
+
+    @media (max-width: 600px) {
+      height: 200px;
+    }
   }
 
   .info-col {
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
+
+    @media (max-width: 768px) {
+      margin-top: -15%;
+    }
 
     @media (min-width: 960px) {
       align-items: flex-start;
       text-align: left;
+      margin-top: 0;
     }
   }
 
@@ -97,18 +108,6 @@
 
     &:hover {
       background-color: color.adjust(vars.$gold-color, $lightness: -15%);
-    }
-  }
-
-  @media (max-width: 960px) {
-    .map-image {
-      height: 220px;
-    }
-  }
-
-  @media (max-width: 600px) {
-    .map-image {
-      height: 200px;
     }
   }
 }

@@ -5,11 +5,20 @@
         <h2 class="section-title ceremony-title">
           Cerimónia
           <br />
-          <span class="ceremony-de">de</span> Casamento
+          <img
+            class="name-amp"
+            src="@/assets/images/de.webp"
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            decoding="async"
+          />
+          Casamento
         </h2>
         <p class="section-subtitle ceremony-subtitle">
           Sábado, 11 de julho de 2026
         </p>
+
         <div class="section-subtitle countdown">
           <div class="countdown-unit">
             <transition name="countdown-flip">
@@ -19,6 +28,7 @@
             </transition>
             <span class="countdown-label">DIAS</span>
           </div>
+
           <div class="countdown-unit">
             <transition name="countdown-flip">
               <div class="countdown-card" :key="paddedHours">
@@ -27,6 +37,7 @@
             </transition>
             <span class="countdown-label">HORAS</span>
           </div>
+
           <div class="countdown-unit">
             <transition name="countdown-flip">
               <div class="countdown-card" :key="paddedMinutes">
@@ -34,14 +45,6 @@
               </div>
             </transition>
             <span class="countdown-label">MIN</span>
-          </div>
-          <div class="countdown-unit">
-            <transition name="countdown-flip">
-              <div class="countdown-card" :key="paddedSeconds">
-                <span class="countdown-number">{{ paddedSeconds }}</span>
-              </div>
-            </transition>
-            <span class="countdown-label">SEG</span>
           </div>
         </div>
       </v-col>
@@ -62,7 +65,6 @@ const countdown = reactive({
   days: 0,
   hours: 0,
   minutes: 0,
-  seconds: 0,
 });
 
 function updateCountdown() {
@@ -73,13 +75,11 @@ function updateCountdown() {
     countdown.days = 0;
     countdown.hours = 0;
     countdown.minutes = 0;
-    countdown.seconds = 0;
 
     if (timerId) {
       window.clearInterval(timerId);
       timerId = null;
     }
-
     return;
   }
 
@@ -88,20 +88,12 @@ function updateCountdown() {
     (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
   );
   countdown.minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  countdown.seconds = Math.floor((distance % (1000 * 60)) / 1000);
 }
 
-const paddedDays = computed(() =>
-  String(countdown.days).padStart(2, "0")
-);
-const paddedHours = computed(() =>
-  String(countdown.hours).padStart(2, "0")
-);
+const paddedDays = computed(() => String(countdown.days).padStart(2, "0"));
+const paddedHours = computed(() => String(countdown.hours).padStart(2, "0"));
 const paddedMinutes = computed(() =>
   String(countdown.minutes).padStart(2, "0")
-);
-const paddedSeconds = computed(() =>
-  String(countdown.seconds).padStart(2, "0")
 );
 
 let timerId;
@@ -159,15 +151,17 @@ onUnmounted(() => {
     text-align: left;
   }
 
-  .ceremony-de {
-    font-family: vars.$secondary-font-family;
-    font-style: italic;
-    letter-spacing: 0.05em;
+  .name-amp {
+    display: inline-block;
+    height: 1em;
+    width: auto;
+    object-fit: contain;
+    pointer-events: none;
   }
 
   .ceremony-subtitle {
     text-align: left;
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 
   .countdown {
@@ -197,8 +191,7 @@ onUnmounted(() => {
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    perspective: 800px;
-    transform-style: preserve-3d;
+    perspective: 800px; /* mantém o efeito 3D do flip */
     transform-origin: center center;
   }
 
@@ -212,19 +205,11 @@ onUnmounted(() => {
     background: rgba(0, 0, 0, 0.12);
   }
 
-  .countdown-card::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: -6px;
-    right: -6px;
-    height: 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.06);
-  }
+  /* Removi o ::after que estava sem altura/efeito visível */
 
   .countdown-number {
     font-family: vars.$heading-font-family;
-    font-size: 2.1rem;
+    font-size: 1.5rem;
     font-weight: 600;
     color: vars.$text-color;
     line-height: 1;
