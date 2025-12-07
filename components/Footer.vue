@@ -16,7 +16,6 @@
         <p class="line line--lead section-subtitle">
           Agradecemos a confirmação até <strong>31 de março de 2026</strong>
         </p>
-
         <p class="section-subtitle">
           Simone – 936 691 881 | João Pedro – 961 748 963
         </p>
@@ -92,7 +91,7 @@
     padding: 0 1rem;
     color: #2b2b2b;
     font-family: vars.$body-font-family;
-    font-style: italic;
+    font-style: normal;
     font-size: 0.9rem;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -101,35 +100,38 @@
 
     p {
       margin: 0.2rem 0;
-      text-decoration: none !important;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-style: normal;
+      color: #2b2b2b;
     }
 
     strong {
       font-weight: 700;
       font-style: normal;
-      text-decoration: none !important;
+      text-decoration: none;
       font-variant-numeric: lining-nums;
       font-feature-settings: "lnum" 1, "pnum" 1;
     }
 
     .line--lead {
-      margin: 0 0 0.6rem 0;
-      font-size: 1.05rem;
+      margin: 0 0 0.4rem 0;
+      font-size: 0.9rem;
       line-height: 1.3;
-      text-decoration: none !important;
+      text-decoration: none;
     }
   }
 
   .section-subtitle {
     font-family: vars.$body-font-family;
-    font-size: 1.4rem;
-    font-style: italic;
+    font-size: 0.9rem;
+    font-style: normal;
     text-align: center;
-    color: vars.$muted-gray;
+    color: #2b2b2b;
     font-variant-numeric: lining-nums;
     font-feature-settings: "lnum" 1, "pnum" 1;
     margin: 0;
-    text-decoration: none !important;
+    text-decoration: none;
   }
 
   @media screen and (max-width: 767px) {
@@ -153,15 +155,19 @@
 
     .image-text {
       padding: 0 1.25rem;
-      font-size: 0.75rem !important;
+      font-size: 0.90rem !important;
+
+      p {
+        font-size: 0.90rem !important;
+      }
 
       .line--lead {
-        font-size: 1rem !important;
+        font-size: 0.90rem !important;
       }
     }
 
     .section-subtitle {
-      font-size: 0.9rem;
+      font-size: 0.90rem !important;
     }
   }
 }

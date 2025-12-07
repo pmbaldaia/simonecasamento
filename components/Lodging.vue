@@ -10,7 +10,7 @@
             class="alojamento-list"
             :style="{ transform: `translateX(${translateX}px)` }"
             @pointerdown="onPointerDown"
-            @click.capture="onCardClick"
+            @click="onCardClick"
             tabindex="0"
             @keydown.left.prevent="scrollTo(activeIndex - 1)"
             @keydown.right.prevent="scrollTo(activeIndex + 1)"
@@ -21,11 +21,11 @@
               class="alojamento-card"
               :ref="(el) => setCardRef(el, index)"
               :data-index="index"
-              @pointerup.prevent
             >
               <p class="hotel-nome">{{ hotel.nome }}</p>
               <v-btn
-                :href="hotel.link"
+                type="button"
+                @click.stop="openLink(hotel.link)"
                 target="_blank"
                 color="#503e36"
                 variant="tonal"
@@ -65,15 +65,27 @@ import {
 const alojamentos = [
   {
     nome: "Hotel Costa Verde",
-    link: "https://www.booking.com/hotel/pt/costa-verde.pt-pt.html?chal_t=1765125448641&force_referer=https%3A%2F%2Fwww.google.com%2F",
+    link: "https://www.booking.com/hotel/pt/costa-verde.pt-pt.html",
   },
   {
-    nome: "Grande Hotel da Póvoa",
+    nome: "Hotel Torre Mar",
+    link: "https://www.booking.com/hotel/pt/torre-mar.pt-pt.html",
+  },
+  {
+    nome: "Varzinn Hotel",
+    link: "https://www.booking.com/hotel/pt/sol-povoa.pt-pt.html",
+  },
+  {
+    nome: "THE ONE Grand Hotel da Póvoa",
     link: "https://www.booking.com/hotel/pt/grande-da-povoa.pt-pt.html",
   },
   {
-    nome: "Hotel Contriz",
-    link: "https://www.booking.com/hotel/pt/contriz.pt-pt.html",
+    nome: "São Félix Hotel Hillside & Nature",
+    link: "https://www.booking.com/hotel/pt/sao-felix-hotel-hillside-nature.pt-pt.html",
+  },
+  {
+    nome: "Tivoli Estela Golf & Lodges Porto",
+    link: "https://www.booking.com/hotel/pt/tivoli-estela-golf-amp-lodges-porto.pt-pt.html",
   },
 ];
 
@@ -113,7 +125,11 @@ function clamp(val, min, max) {
 }
 
 function setCardRef(el, idx) {
-  cardRefs.value[idx] = el;
+  if (el) {
+    cardRefs.value[idx] = el;
+  } else {
+    delete cardRefs.value[idx];
+  }
 }
 
 function calcBounds() {
@@ -123,8 +139,8 @@ function calcBounds() {
   if (!wrap || !el || !cards.length) return { min: 0, max: 0 };
 
   const style = getComputedStyle(wrap);
-  const paddingLeft = parseFloat(style.paddingLeft || 0);
-  const paddingRight = parseFloat(style.paddingRight || 0);
+  const paddingLeft = parseFloat(style.paddingLeft || "0") || 0;
+  const paddingRight = parseFloat(style.paddingRight || "0") || 0;
   const wrapW = wrap.clientWidth;
   const listW = el.scrollWidth;
 
@@ -148,7 +164,7 @@ function updateTranslateForIndex(index, smooth = true) {
   if (!wrap || !el || !card) return;
 
   const style = getComputedStyle(wrap);
-  const paddingLeft = parseFloat(style.paddingLeft || 0);
+  const paddingLeft = parseFloat(style.paddingLeft || "0") || 0;
   const wrapW = wrap.clientWidth;
   const listW = el.scrollWidth;
 
@@ -179,7 +195,7 @@ function updateActiveIndexByTranslate() {
   if (!wrap || !cards.length) return;
 
   const style = getComputedStyle(wrap);
-  const paddingLeft = parseFloat(style.paddingLeft || 0);
+  const paddingLeft = parseFloat(style.paddingLeft || "0") || 0;
   const visibleLeft = -translateX.value + paddingLeft;
   const visibleCenter = visibleLeft + wrap.clientWidth / 2;
 
@@ -247,7 +263,9 @@ function onPointerDown(e) {
 
   const el = alojamentoEl.value;
   if (el) {
-    el.setPointerCapture(pointerId);
+    try {
+      el.setPointerCapture(pointerId);
+    } catch {}
     el.style.transition = "";
   }
 
@@ -332,13 +350,19 @@ function onCardClick(evt) {
   }
 }
 
-watch([() => alojamentos.length, itemsPerPage], () => {
+function openLink(url) {
+  if (!url) return;
+  window.open(url, "_blank", "noopener");
+}
+
+watch([() => alojamentos.length, () => itemsPerPage.value], () => {
   nextTick(() => {
     cardRefs.value = cardRefs.value.slice(0, alojamentos.length);
     updateTranslateForIndex(activeIndex.value, false);
   });
 });
 </script>
+
 <style scoped lang="scss">
 @use "@/assets/scss/_variables.scss" as vars;
 
@@ -375,20 +399,14 @@ watch([() => alojamentos.length, itemsPerPage], () => {
     padding: 2rem 1.75rem;
     min-width: 260px;
     width: 260px;
-
-    /* REMOVIDO o box-shadow dourado */
     box-shadow: none;
-
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
     touch-action: pan-y;
 
     &:hover {
-      /* REMOVIDO o box-shadow dourado do hover */
       box-shadow: none;
-
-      /* manteve-se apenas o castanho */
       border: 1px solid #503e36;
     }
 
@@ -411,10 +429,7 @@ watch([() => alojamentos.length, itemsPerPage], () => {
       align-self: center;
 
       &:hover {
-        /* REMOVIDO box-shadow dourado */
         box-shadow: none;
-
-        /* manteve-se o castanho */
         border: 1px solid #503e36;
       }
     }
