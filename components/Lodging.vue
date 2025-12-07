@@ -65,13 +65,16 @@ import {
 const alojamentos = [
   {
     nome: "Hotel Costa Verde",
-    link: "https://maps.app.goo.gl/dghVYAbFsAAxSUW59",
+    link: "https://www.booking.com/hotel/pt/costa-verde.pt-pt.html?chal_t=1765125448641&force_referer=https%3A%2F%2Fwww.google.com%2F",
   },
   {
     nome: "Grande Hotel da Póvoa",
-    link: "https://www.grandehoteldapovoa.com/",
+    link: "https://www.booking.com/hotel/pt/grande-da-povoa.pt-pt.html",
   },
-  { nome: "Hotel Contriz", link: "http://hotel-contriz.com.es/" },
+  {
+    nome: "Hotel Contriz",
+    link: "https://www.booking.com/hotel/pt/contriz.pt-pt.html",
+  },
 ];
 
 const alojamentoWrap = ref(null);

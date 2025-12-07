@@ -156,7 +156,7 @@
       font-size: 0.75rem !important;
 
       .line--lead {
-        font-size: 0.85rem !important;
+        font-size: 1rem !important;
       }
     }
 
