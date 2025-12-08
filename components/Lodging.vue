@@ -24,12 +24,12 @@
             >
               <p class="hotel-nome">{{ hotel.nome }}</p>
               <v-btn
+                class="ver-btn"
                 type="button"
                 @click.stop="openLink(hotel.link)"
                 target="_blank"
                 color="#503e36"
                 variant="tonal"
-                class="ver-btn"
               >
                 Ver Alojamento
               </v-btn>
@@ -53,14 +53,7 @@
 </template>
 
 <script setup>
-import {
-  ref,
-  computed,
-  onMounted,
-  onBeforeUnmount,
-  nextTick,
-  watch,
-} from "vue";
+import { ref, computed, onMounted, onBeforeUnmount, nextTick, watch } from "vue";
 
 const alojamentos = [
   {
@@ -85,7 +78,8 @@ const alojamentos = [
   },
   {
     nome: "Tivoli Estela Golf & Lodges Porto",
-    link: "https://www.booking.com/hotel/pt/tivoli-estela-golf-amp-lodges-porto.pt-pt.html",
+    link:
+      "https://www.booking.com/hotel/pt/tivoli-estela-golf-amp-lodges-porto.pt-pt.html",
   },
 ];
 
@@ -113,23 +107,16 @@ const OVERSCROLL = 60;
 const pageCount = computed(() =>
   Math.max(1, Math.ceil(alojamentos.length / itemsPerPage.value))
 );
-const pages = computed(() =>
-  Array.from({ length: pageCount.value }, (_, i) => i)
-);
-const activePage = computed(() =>
-  Math.floor(activeIndex.value / itemsPerPage.value)
-);
+const pages = computed(() => Array.from({ length: pageCount.value }, (_, i) => i));
+const activePage = computed(() => Math.floor(activeIndex.value / itemsPerPage.value));
 
 function clamp(val, min, max) {
   return Math.min(Math.max(val, min), max);
 }
 
 function setCardRef(el, idx) {
-  if (el) {
-    cardRefs.value[idx] = el;
-  } else {
-    delete cardRefs.value[idx];
-  }
+  if (el) cardRefs.value[idx] = el;
+  else delete cardRefs.value[idx];
 }
 
 function calcBounds() {
@@ -221,11 +208,7 @@ function scrollTo(index) {
 }
 
 function scrollToPage(page) {
-  const targetIndex = clamp(
-    page * itemsPerPage.value,
-    0,
-    alojamentos.length - 1
-  );
+  const targetIndex = clamp(page * itemsPerPage.value, 0, alojamentos.length - 1);
   scrollTo(targetIndex);
 }
 
@@ -291,15 +274,9 @@ function onPointerMove(e) {
   translateX.value += dx;
 
   const { min, max } = calcBounds();
-  translateX.value = clamp(
-    translateX.value,
-    min - OVERSCROLL,
-    max + OVERSCROLL
-  );
+  translateX.value = clamp(translateX.value, min - OVERSCROLL, max + OVERSCROLL);
 
-  if (Math.abs(dragDistance) > 8) {
-    preventClick = true;
-  }
+  if (Math.abs(dragDistance) > 8) preventClick = true;
 }
 
 function onPointerUp(e) {
@@ -326,11 +303,7 @@ function onPointerUp(e) {
 
   if (absVelocity > VELOCITY_THRESHOLD) {
     const step = Math.min(2, Math.round(absVelocity / VELOCITY_THRESHOLD));
-    targetIndex = clamp(
-      targetIndex + step * direction,
-      0,
-      alojamentos.length - 1
-    );
+    targetIndex = clamp(targetIndex + step * direction, 0, alojamentos.length - 1);
   } else if (absDrag > DISTANCE_THRESHOLD) {
     targetIndex = clamp(targetIndex + 1 * direction, 0, alojamentos.length - 1);
   }
@@ -406,7 +379,6 @@ watch([() => alojamentos.length, () => itemsPerPage.value], () => {
     touch-action: pan-y;
 
     &:hover {
-      box-shadow: none;
       border: 1px solid #503e36;
     }
 
@@ -419,19 +391,40 @@ watch([() => alojamentos.length, () => itemsPerPage.value], () => {
     }
 
     .ver-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       text-transform: none;
       font-weight: 500;
       font-family: vars.$heading-font-family;
       border-radius: 9999px;
       padding: 0.5rem 1.25rem;
-      transition: all 0.3s ease;
       margin-top: auto;
       align-self: center;
+      cursor: pointer;
+      background: transparent !important;
+      border: 1px solid rgba(80, 62, 54, 0.12) !important;
+      color: inherit !important;
+      transition: background-color 180ms ease, border-color 180ms ease,
+        transform 180ms ease, box-shadow 180ms ease;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
 
-      &:hover {
-        box-shadow: none;
-        border: 1px solid #503e36;
-      }
+    .ver-btn.v-btn:hover,
+    .ver-btn:hover,
+    &:hover .ver-btn {
+      background-color: #503e36 !important;
+      border-color: #503e36 !important;
+      color: #ffffff !important;
+      box-shadow: none !important;
+      transform: translateY(-2px);
+    }
+
+    .ver-btn:focus {
+      outline: 2px solid rgba(80, 62, 54, 0.12);
+      outline-offset: 3px;
     }
   }
 

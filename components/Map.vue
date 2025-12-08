@@ -14,7 +14,7 @@
         </p>
 
         <v-btn
-          class="map-btn mt-2 mb-4"
+          class="map-btn mt-4 mb-4"
           rounded="xl"
           size="large"
           href="https://maps.app.goo.gl/ysJ65kacnqPFDSra6"
@@ -96,18 +96,23 @@
   }
 
   .map-btn {
-    background-color: #503e36;
-    color: vars.$white-color;
+    background-color: #503e36 !important;
+    color: vars.$white-color !important;
     font-family: vars.$heading-font-family;
     font-weight: 500;
     padding: 0.75rem 5rem;
     font-size: 1rem;
     letter-spacing: 0.5px;
-    transition: all 0.3s ease;
-    margin-top: 1rem;
+    transition: background-color 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+    border: 1px solid #503e36 !important;
 
-    &:hover {
-      background-color: color.adjust(vars.$gold-color, $lightness: -15%);
+    &:hover,
+    &.v-btn:hover {
+      background-color: #ffffff !important;
+      color: #000 !important;
+      border-color: #503e36 !important;
+      transform: translateY(-2px);
+      box-shadow: none;
     }
   }
 }
