@@ -13,9 +13,9 @@
     <div class="fog-bar" role="region" aria-label="Confirmação">
       <div class="fog" />
       <div id="footer-text" class="image-text">
-        <p class="line line--lead section-subtitle">
+      <!--   <p class="line line--lead section-subtitle">
           Agradecemos a confirmação até <strong>31 de março de 2026</strong>
-        </p>
+        </p> -->
         <p class="section-subtitle">
           Simone – 936 691 881 | João Pedro – 961 748 963
         </p>
